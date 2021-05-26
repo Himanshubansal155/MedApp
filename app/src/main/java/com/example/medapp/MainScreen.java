@@ -38,6 +38,21 @@ public class MainScreen extends AppCompatActivity {
         ImageButton next1 = findViewById(R.id.imageButton3);
         ImageButton next2 = findViewById(R.id.imageButton5);
 
+        Thread thread = new Thread(){
+            @Override
+            public void run() {
+                try {
+                    sleep(1500);
+                    Intent intent = new Intent(getApplicationContext(),MainScreen2.class);
+                    startActivity(intent);
+                    finish();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+        thread.start();
+
         next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

@@ -30,6 +30,21 @@ public class MainScreen3 extends AppCompatActivity {
         ImageButton next1 = findViewById(R.id.imageButton3);
         ImageButton next2 = findViewById(R.id.imageButton4);
 
+        Thread thread = new Thread(){
+            @Override
+            public void run() {
+                try {
+                    sleep(1500);
+                    Intent intent = new Intent(getApplicationContext(),MainActivity.class);
+                    startActivity(intent);
+                    finish();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+        thread.start();
+
         next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
