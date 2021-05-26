@@ -42,7 +42,7 @@ public class MainScreen extends AppCompatActivity {
             @Override
             public void run() {
                 try {
-                    sleep(1500);
+                    sleep(2000);
                     Intent intent = new Intent(getApplicationContext(),MainScreen2.class);
                     startActivity(intent);
                     finish();
