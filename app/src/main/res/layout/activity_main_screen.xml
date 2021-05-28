@@ -57,10 +57,10 @@
 
         <ImageButton
             android:id="@+id/imageButton4"
-            android:layout_width="35dp"
+            android:layout_width="20dp"
             android:layout_height="20dp"
             android:layout_weight="1"
-            app:srcCompat="@drawable/dot2" />
+            app:srcCompat="@drawable/dot1" />
 
         <ImageButton
             android:id="@+id/imageButton3"

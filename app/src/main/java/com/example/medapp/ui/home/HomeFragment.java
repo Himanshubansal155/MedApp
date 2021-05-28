@@ -161,6 +161,7 @@ public class HomeFragment extends Fragment {
             }
         });
     }
+
     private void lineDisplay(Button todayButton, Button weekButton, Button monthButton) {
         todayButton.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, android.R.drawable.button_onoff_indicator_on);
         weekButton.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
