@@ -1,16 +1,18 @@
 package com.example.medapp.ui.home;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.medapp.MainActivity;
 import com.example.medapp.R;
+import com.example.medapp.medicine_Page_fk;
 
 public class MyListAdapter extends ArrayAdapter<String> {
 
@@ -57,7 +59,9 @@ public class MyListAdapter extends ArrayAdapter<String> {
         button1Text.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Intent intent=new Intent(getContext(),medicine_Page_fk.class);
                 Toast.makeText(getContext(), "Button Clicked", Toast.LENGTH_SHORT).show();
+
             }
         });
 
@@ -68,6 +72,14 @@ public class MyListAdapter extends ArrayAdapter<String> {
             }
         });
 
+        button2Text.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(getContext(),medicine_Page_fk.class);
+                context.startActivity(intent);
+
+            }
+        });
         return rowView;
     };
 }

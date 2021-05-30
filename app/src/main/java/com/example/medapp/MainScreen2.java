@@ -30,6 +30,21 @@ public class MainScreen2 extends AppCompatActivity {
         ImageButton next1 = findViewById(R.id.imageButton4);
         ImageButton next2 = findViewById(R.id.imageButton5);
 
+        Thread thread = new Thread(){
+            @Override
+            public void run() {
+                try {
+                    sleep(2000);
+                    Intent intent = new Intent(getApplicationContext(),MainScreen3.class);
+                    startActivity(intent);
+                    finish();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+        thread.start();
+
         next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -37,6 +52,7 @@ public class MainScreen2 extends AppCompatActivity {
                 overridePendingTransition(R.anim.slide_out_left, R.anim.slide_out_left);
                 startActivity(intent);
                 finish();
+                thread.stop();
             }
         });
 
@@ -47,6 +63,7 @@ public class MainScreen2 extends AppCompatActivity {
                 overridePendingTransition(R.anim.slide_out_right, R.anim.slide_out_left);
                 startActivity(intent);
                 finish();
+                thread.stop();
             }
         });
 
@@ -57,6 +74,7 @@ public class MainScreen2 extends AppCompatActivity {
                 overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_left);
                 startActivity(intent);
                 finish();
+                thread.stop();
             }
         });
 
@@ -67,6 +85,7 @@ public class MainScreen2 extends AppCompatActivity {
                 overridePendingTransition(R.anim.slide_out_left, R.anim.slide_out_left);
                 startActivity(intent);
                 finish();
+                thread.stop();
             }
         });
     }

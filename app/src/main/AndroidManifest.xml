@@ -9,7 +9,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.MedApp">
-        <activity android:name=".MainScreen3"></activity>
+        <activity android:name=".Edit_Reminder"></activity>
+        <activity android:name=".medicine_Page_fk" />
+        <activity android:name=".MainScreen3" />
+        <activity android:name=".LoginActivity" />
         <activity android:name=".MainScreen2" />
         <activity
             android:name=".MainScreen"
@@ -23,6 +26,11 @@
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name" />
+        <activity android:name=".RegisterActivity" />
+
+        <meta-data
+            android:name="preloaded_fonts"
+            android:resource="@array/preloaded_fonts" />
     </application>
 
 </manifest>

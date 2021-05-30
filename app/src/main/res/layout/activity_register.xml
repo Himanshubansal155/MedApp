@@ -1,34 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:padding="15sp"
     android:id="@+id/constraint_reg"
-    android:background="@drawable/buttonselector"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@drawable/color"
+    android:padding="15sp">
 
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        android:contentDescription="@string/name"
         android:src="@drawable/ic_baseline_appointment"
-        android:contentDescription="@string/name" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <TextView
         android:id="@+id/name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/name"
         android:layout_marginStart="5sp"
+        android:layout_marginLeft="5sp"
+        android:text="@string/name"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
         android:textSize="20sp"
-        app:layout_constraintLeft_toRightOf="@+id/imageView"
-        app:layout_constraintTop_toTopOf="@+id/imageView"
         app:layout_constraintBottom_toBottomOf="@+id/imageView"
-        android:layout_marginLeft="5sp" />
+        app:layout_constraintLeft_toRightOf="@+id/imageView"
+        app:layout_constraintTop_toTopOf="@+id/imageView" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/name_text_layout"
@@ -52,72 +52,26 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <ImageView
-        android:id="@+id/imageView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/name_text_layout"
-        android:layout_marginTop="20sp"
-        android:src="@drawable/ic_baseline_home_work_24"
-        android:contentDescription="@string/address" />
-
-    <TextView
-        android:id="@+id/address"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/address"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-        android:textSize="20sp"
-        app:layout_constraintLeft_toRightOf="@id/imageView2"
-        app:layout_constraintTop_toTopOf="@+id/imageView2"
-        app:layout_constraintBottom_toBottomOf="@+id/imageView2"
-        android:paddingStart="5sp"
-        android:paddingLeft="5sp" />
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/address_text_layout"
-        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        android:hint="@string/enter_your_address"
-        app:errorIconDrawable="@drawable/ic_baseline_error_outline_24"
-        app:helperTextTextAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/address">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/address_edit_text"
-            android:layout_width="match_parent"
-            android:layout_height="48dp"
-            android:inputType="text"
-            android:maxLines="1" />
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <ImageView
         android:id="@+id/imageView3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/address_text_layout"
-        android:layout_marginTop="20sp"
+        android:layout_marginTop="20dp"
+        android:contentDescription="@string/phone_number"
         android:src="@drawable/ic_baseline_local_phone_24"
-        android:contentDescription="@string/phone_number" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/name_text_layout" />
 
     <TextView
         android:id="@+id/phone"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:paddingStart="5sp"
+        android:paddingLeft="5sp"
         android:text="@string/phone_number"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
         android:textSize="20sp"
-        app:layout_constraintLeft_toRightOf="@id/imageView3"
-        app:layout_constraintTop_toBottomOf="@+id/address_text_layout"
-        app:layout_constraintTop_toTopOf="@+id/imageView3"
         app:layout_constraintBottom_toBottomOf="@+id/imageView3"
-        android:paddingStart="5sp"
-        android:paddingLeft="5sp" />
+        app:layout_constraintLeft_toRightOf="@id/imageView3" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/phone_text_layout"
@@ -144,24 +98,24 @@
         android:id="@+id/imageView4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/phone_text_layout"
         android:layout_marginTop="20sp"
+        android:contentDescription="@string/email"
         android:src="@drawable/ic_baseline_email_24"
-        android:contentDescription="@string/email" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/phone_text_layout" />
 
     <TextView
         android:id="@+id/email"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:paddingStart="5sp"
+        android:paddingLeft="5sp"
         android:text="@string/email"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
         android:textSize="20sp"
-        app:layout_constraintLeft_toRightOf="@id/imageView4"
-        app:layout_constraintTop_toTopOf="@+id/imageView4"
         app:layout_constraintBottom_toBottomOf="@+id/imageView4"
-        android:paddingStart="5sp"
-        android:paddingLeft="5sp" />
+        app:layout_constraintLeft_toRightOf="@id/imageView4"
+        app:layout_constraintTop_toTopOf="@+id/imageView4" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/email_text_layout"
@@ -172,9 +126,9 @@
         android:hint="@string/enter_your_email"
         app:errorIconDrawable="@drawable/ic_baseline_error_outline_24"
         app:helperTextTextAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
-        app:layout_constraintTop_toBottomOf="@id/email"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent">
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/email">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/email_edit_text"
@@ -188,24 +142,24 @@
         android:id="@+id/imageView5"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/email_text_layout"
         android:layout_marginTop="20sp"
+        android:contentDescription="@string/user_id"
         android:src="@drawable/ic_baseline_perm_identity_24"
-        android:contentDescription="@string/user_id" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/email_text_layout" />
 
     <TextView
         android:id="@+id/user"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:paddingStart="5sp"
+        android:paddingLeft="5sp"
         android:text="@string/user_id"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
         android:textSize="20sp"
-        app:layout_constraintLeft_toRightOf="@id/imageView5"
-        app:layout_constraintTop_toTopOf="@+id/imageView5"
         app:layout_constraintBottom_toBottomOf="@+id/imageView5"
-        android:paddingStart="5sp"
-        android:paddingLeft="5sp" />
+        app:layout_constraintLeft_toRightOf="@id/imageView5"
+        app:layout_constraintTop_toTopOf="@+id/imageView5" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/user_text_layout"
@@ -232,24 +186,24 @@
         android:id="@+id/imageView6"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/user_text_layout"
         android:layout_marginTop="20sp"
+        android:contentDescription="@string/password_register"
         android:src="@drawable/ic_baseline_lock_24"
-        android:contentDescription="@string/password_register" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/user_text_layout" />
 
     <TextView
         android:id="@+id/password_register"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:paddingStart="5sp"
+        android:paddingLeft="5sp"
         android:text="@string/password_register"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
         android:textSize="20sp"
-        app:layout_constraintLeft_toRightOf="@+id/imageView6"
-        app:layout_constraintTop_toTopOf="@+id/imageView6"
         app:layout_constraintBottom_toBottomOf="@+id/imageView6"
-        android:paddingStart="5sp"
-        android:paddingLeft="5sp" />
+        app:layout_constraintLeft_toRightOf="@+id/imageView6"
+        app:layout_constraintTop_toTopOf="@+id/imageView6" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/password_register_text_layout"
@@ -276,13 +230,14 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <Button
+        android:id="@+id/register_btn"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/password_register_text_layout"
+        android:layout_marginTop="20sp"
+        android:text="@string/register"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        android:layout_marginTop="20sp"
-        android:text="@string/register"/>
+        app:layout_constraintTop_toBottomOf="@id/password_register_text_layout" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

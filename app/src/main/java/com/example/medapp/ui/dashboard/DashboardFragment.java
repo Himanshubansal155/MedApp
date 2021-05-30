@@ -4,7 +4,11 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.Button;
+import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -13,23 +17,51 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.medapp.R;
+import com.example.medapp.ui.home.MyListAdapter;
 
 public class DashboardFragment extends Fragment {
 
     private DashboardViewModel dashboardViewModel;
+    ListView listView;
+    private Button After;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         dashboardViewModel =
                 new ViewModelProvider(this).get(DashboardViewModel.class);
         View root = inflater.inflate(R.layout.fragment_dashboard, container, false);
-        final TextView textView = root.findViewById(R.id.text_dashboard);
-        dashboardViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
+
+        listView = root.findViewById(R.id.medicineList);
+
+        String[] mainTitle = {
+                "Title 1", "Title 2",
+                "Title 3", "Title 4",
+                "Title 5",
+        };
+
+        String[] button1Title = {
+                "After Lunch", "After Lunch", "After Lunch", "After Lunch", "After Lunch"
+        };
+        String[] button2Title = {
+                "After Dinner", "After Dinner", "After Dinner", "After Dinner", "After Dinner"
+        };
+        Integer[] imgId = {
+                R.drawable.pill1, R.drawable.pill2,
+                R.drawable.pill3, R.drawable.pill4,
+                R.drawable.pill5,
+        };
+
+        MyListAdapter adapter = new MyListAdapter(getActivity(), mainTitle, button1Title, button2Title, imgId);
+        listView.setAdapter(adapter);
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onChanged(@Nullable String s) {
-                textView.setText(s);
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Toast.makeText(getContext(), "item clicked", Toast.LENGTH_SHORT).show();
             }
         });
+
+
         return root;
     }
 }
