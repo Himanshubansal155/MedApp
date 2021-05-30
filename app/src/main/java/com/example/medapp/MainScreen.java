@@ -60,16 +60,18 @@ public class MainScreen extends AppCompatActivity {
                 overridePendingTransition(R.anim.slide_out_left, R.anim.slide_out_left);
                 startActivity(intent);
                 finish();
+                thread.stop();
             }
         });
 
         skip.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainScreen.this, MainActivity.class);
+                Intent intent = new Intent(MainScreen.this, LoginActivity.class);
                 overridePendingTransition(R.anim.slide_out_right, R.anim.slide_out_left);
                 startActivity(intent);
                 finish();
+                thread.stop();
             }
         });
 
@@ -80,6 +82,7 @@ public class MainScreen extends AppCompatActivity {
                 overridePendingTransition(R.anim.slide_out_left, R.anim.slide_out_left);
                 startActivity(intent);
                 finish();
+                thread.stop();
             }
         });
 
@@ -90,6 +93,7 @@ public class MainScreen extends AppCompatActivity {
                 overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_left);
                 startActivity(intent);
                 finish();
+                thread.stop();
             }
         });
     }

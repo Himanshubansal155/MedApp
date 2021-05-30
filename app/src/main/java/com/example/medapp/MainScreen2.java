@@ -52,6 +52,7 @@ public class MainScreen2 extends AppCompatActivity {
                 overridePendingTransition(R.anim.slide_out_left, R.anim.slide_out_left);
                 startActivity(intent);
                 finish();
+                thread.stop();
             }
         });
 
@@ -62,6 +63,7 @@ public class MainScreen2 extends AppCompatActivity {
                 overridePendingTransition(R.anim.slide_out_right, R.anim.slide_out_left);
                 startActivity(intent);
                 finish();
+                thread.stop();
             }
         });
 
@@ -72,6 +74,7 @@ public class MainScreen2 extends AppCompatActivity {
                 overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_left);
                 startActivity(intent);
                 finish();
+                thread.stop();
             }
         });
 
@@ -82,6 +85,7 @@ public class MainScreen2 extends AppCompatActivity {
                 overridePendingTransition(R.anim.slide_out_left, R.anim.slide_out_left);
                 startActivity(intent);
                 finish();
+                thread.stop();
             }
         });
     }
