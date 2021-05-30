@@ -77,5 +77,11 @@
     <string name="month">month</string>
     <string name="frequency">Frequency</string>
     <string name="duaration">Duaration</string>
+    <string name="www_pharmeasy_in">www.pharmeasy.in</string>
+    <string name="www_1mg_com">www.1mg.com/</string>
+    <string name="www_gogomeds_com">www.gogomeds.com</string>
+    <string name="www_medibuddy_in">www.medibuddy.in</string>
+    <string name="www_netmeds_com">www.netmeds.com</string>
+    <string name="www_mchemist_com">www.mchemist.com</string>
 
 </resources>
