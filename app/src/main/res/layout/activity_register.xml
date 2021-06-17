@@ -143,7 +143,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20sp"
-        android:contentDescription="@string/user_id"
+        android:contentDescription="@string/password_register"
         android:src="@drawable/ic_baseline_perm_identity_24"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/email_text_layout" />
@@ -154,7 +154,7 @@
         android:layout_height="wrap_content"
         android:paddingStart="5sp"
         android:paddingLeft="5sp"
-        android:text="@string/user_id"
+        android:text="@string/password_register"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="@+id/imageView5"
@@ -167,7 +167,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
-        android:hint="@string/enter_your_user_id"
+        android:hint="@string/enter_your_password"
         app:errorIconDrawable="@drawable/ic_baseline_error_outline_24"
         app:helperTextTextAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -175,10 +175,10 @@
         app:layout_constraintTop_toBottomOf="@+id/user">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/user_edit_text"
+            android:id="@+id/password_edit_text"
             android:layout_width="match_parent"
             android:layout_height="48dp"
-            android:inputType="text"
+            android:inputType="textPassword"
             android:maxLines="1" />
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -198,7 +198,7 @@
         android:layout_height="wrap_content"
         android:paddingStart="5sp"
         android:paddingLeft="5sp"
-        android:text="@string/password_register"
+        android:text="@string/password_confirm"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="@+id/imageView6"
@@ -211,7 +211,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
-        android:hint="@string/enter_your_phone_number"
+        android:hint="@string/enter_your_confirm_password"
         app:errorIconDrawable="@drawable/ic_baseline_error_outline_24"
         app:helperTextTextAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -220,13 +220,11 @@
         app:passwordToggleEnabled="true">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/password_register_edit_text"
+            android:id="@+id/confirm_edit_text"
             android:layout_width="match_parent"
             android:layout_height="48dp"
             android:inputType="textPassword"
             android:maxLines="1" />
-
-
     </com.google.android.material.textfield.TextInputLayout>
 
     <Button

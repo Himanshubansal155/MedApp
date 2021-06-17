@@ -2,13 +2,13 @@
 package com.example.medapp.ui.home;
 
 import android.app.DatePickerDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.ImageButton;
@@ -19,17 +19,15 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.recyclerview.widget.DefaultItemAnimator;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.medapp.MainActivity;
+import com.example.medapp.MedicinePage;
 import com.example.medapp.R;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.List;
 
 public class HomeFragment extends Fragment {
 
@@ -52,7 +50,7 @@ public class HomeFragment extends Fragment {
 
         TextView calendarDateDisplay = root.findViewById(R.id.calendarDateDisplay);
         TextView dayDisplay = root.findViewById(R.id.dayDisplay);
-        imageButton = root.findViewById(R.id.imageButton);
+        imageButton = root.findViewById(R.id.logout);
         todayButton = root.findViewById(R.id.today);
         weekButton = root.findViewById(R.id.week);
         monthButton = root.findViewById(R.id.month);
@@ -63,7 +61,10 @@ public class HomeFragment extends Fragment {
         imageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                FirebaseAuth.getInstance().signOut();
                 Toast.makeText(getContext(), "Image Button Clicked", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(getContext(), MedicinePage.class);
+                startActivity(intent);
             }
         });
 

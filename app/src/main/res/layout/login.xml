@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@drawable/color"
     android:padding="20dp"
-    tools:context=".Login">
+    tools:context=".LoginActivity">
 
     <ImageView
         android:id="@+id/main_image"
@@ -142,7 +142,7 @@
     </LinearLayout>
 
     <ImageView
-        android:id="@+id/google"
+        android:id="@+id/sign_in_button"
         android:layout_width="30dp"
         android:layout_height="30dp"
         android:layout_marginTop="10dp"

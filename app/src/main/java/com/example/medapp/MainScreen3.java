@@ -36,6 +36,7 @@ public class MainScreen3 extends AppCompatActivity {
                 try {
                     sleep(2000);
                     Intent intent = new Intent(getApplicationContext(),LoginActivity.class);
+                    overridePendingTransition(R.anim.slide_out_left, R.anim.slide_out_left);
                     startActivity(intent);
                     finish();
                 } catch (InterruptedException e) {
