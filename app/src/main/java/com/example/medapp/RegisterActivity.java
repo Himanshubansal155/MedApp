@@ -26,10 +26,11 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
 
 public class RegisterActivity extends AppCompatActivity {
-    EditText name, email, phone, password, confirm;
-    boolean isNameValid, isEmailValid, isPhoneValid, isPasswordValid, ispasswordConfirm;
-    TextInputLayout nameError, emailError, phoneError, passError, confirmError;
+    EditText name, email, password, confirm;
+    boolean isNameValid, isEmailValid, isPasswordValid, ispasswordConfirm;
+    TextInputLayout nameError, emailError, passError, confirmError;
     FirebaseAuth mAuth;
+    Button register_btn;
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
@@ -42,23 +43,20 @@ public class RegisterActivity extends AppCompatActivity {
         android.graphics.drawable.Drawable background = RegisterActivity.this.getResources().getDrawable(R.drawable.color);
         getWindow().setBackgroundDrawable(background);
 
-        Button register_btn = findViewById(R.id.register_btn);
+        register_btn = findViewById(R.id.register_btn);
         name = (EditText) findViewById(R.id.name_edit_text);
         email = (EditText) findViewById(R.id.email_edit_text);
-        phone = (EditText) findViewById(R.id.phone_edit_text);
         password = (EditText) findViewById(R.id.password_edit_text);
         confirm = (EditText) findViewById(R.id.confirm_edit_text);
         nameError = (TextInputLayout) findViewById(R.id.name_text_layout);
         emailError = (TextInputLayout) findViewById(R.id.email_text_layout);
-        phoneError = (TextInputLayout) findViewById(R.id.phone_text_layout);
         passError = (TextInputLayout) findViewById(R.id.user_text_layout);
         confirmError = (TextInputLayout) findViewById(R.id.password_register_text_layout);
         mAuth = FirebaseAuth.getInstance();
         register_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
-                startActivity(intent);
+                setValidation();
             }
         });
 
@@ -86,15 +84,6 @@ public class RegisterActivity extends AppCompatActivity {
             emailError.setErrorEnabled(false);
         }
 
-        // Check for a valid phone number.
-        if (phone.getText().toString().isEmpty()) {
-            phoneError.setError(getResources().getString(R.string.phone_error));
-            isPhoneValid = false;
-        } else {
-            isPhoneValid = true;
-            phoneError.setErrorEnabled(false);
-        }
-
         // Check for a valid password.
         if (password.getText().toString().isEmpty()) {
             passError.setError(getResources().getString(R.string.password_error));
@@ -113,17 +102,13 @@ public class RegisterActivity extends AppCompatActivity {
         } else if (confirm.getText().length() < 6) {
             confirmError.setError(getResources().getString(R.string.error_invalid_password));
             ispasswordConfirm = false;
-        } else if(!confirm.getText().equals(password.getText())){
-            confirmError.setError(getResources().getString(R.string.password_not_same));
-            ispasswordConfirm = false;
-        }
-        else {
+        } else if(confirm.getText().toString().equals(password.getText().toString())){
             ispasswordConfirm = true;
             passError.setErrorEnabled(false);
         }
 
-        if (isNameValid && isEmailValid && isPhoneValid && isPasswordValid && ispasswordConfirm) {
-            UserDetails details = new UserDetails(name.getText().toString(), email.getText().toString(), phone.getText().toString(), password.getText().toString());
+        if (isNameValid && isEmailValid && isPasswordValid && ispasswordConfirm) {
+            UserDetails details = new UserDetails(name.getText().toString(), email.getText().toString(), password.getText().toString());
             mAuth.createUserWithEmailAndPassword(details.getEmail(), details.getPassword())
                     .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                         @Override
@@ -132,16 +117,19 @@ public class RegisterActivity extends AppCompatActivity {
                                 // Sign in success, update UI with the signed-in details's information
                                 FirebaseUser user = mAuth.getCurrentUser();
 //
-                                Toast.makeText(RegisterActivity.this, "Wait For Second Until Registered Successfully", Toast.LENGTH_SHORT).show();
-//                                UserProfileChangeRequest profileUpdate = new UserProfileChangeRequest.Builder().setDisplayName(details.getName()).build();
-//                                user.updateProfile(profileUpdate)
-//                                        .addOnCompleteListener(task1 -> {
-//                                            if (task1.isSuccessful()) {
-//                                                Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
-//                                                startActivity(intent);
-//                                                finish();
-//                                            }
-//                                        });
+                                Toast.makeText(RegisterActivity.this, "Registered Successfully", Toast.LENGTH_SHORT).show();
+
+                                UserProfileChangeRequest profileUpdate = new UserProfileChangeRequest.Builder().setDisplayName(details.getName()).build();
+                                user.updateProfile(profileUpdate)
+                                        .addOnCompleteListener(task1 -> {
+                                            if (task1.isSuccessful()) {
+                                                Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+                                                startActivity(intent);
+                                                finish();
+                                            }
+                                        });
+
+
                             } else {
 //                                // If sign in fails, display a message to the details.
                                 Toast.makeText(RegisterActivity.this, "Authentication failed.",

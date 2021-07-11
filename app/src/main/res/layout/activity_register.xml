@@ -9,13 +9,23 @@
     android:padding="15sp">
 
     <ImageView
+        android:id="@+id/main_image"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:contentDescription="@string/Headline"
+        android:src="@drawable/doctorback"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
         android:id="@+id/imageView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:contentDescription="@string/name"
         android:src="@drawable/ic_baseline_appointment"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/main_image" />
 
     <TextView
         android:id="@+id/name"
@@ -51,48 +61,7 @@
             android:maxLines="1" />
     </com.google.android.material.textfield.TextInputLayout>
 
-    <ImageView
-        android:id="@+id/imageView3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:contentDescription="@string/phone_number"
-        android:src="@drawable/ic_baseline_local_phone_24"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/name_text_layout" />
 
-    <TextView
-        android:id="@+id/phone"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:paddingStart="5sp"
-        android:paddingLeft="5sp"
-        android:text="@string/phone_number"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="@+id/imageView3"
-        app:layout_constraintLeft_toRightOf="@id/imageView3" />
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/phone_text_layout"
-        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        android:hint="@string/enter_your_phone_number"
-        app:errorIconDrawable="@drawable/ic_baseline_error_outline_24"
-        app:helperTextTextAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/phone">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/phone_edit_text"
-            android:layout_width="match_parent"
-            android:layout_height="48dp"
-            android:inputType="number"
-            android:maxLines="1" />
-    </com.google.android.material.textfield.TextInputLayout>
 
     <ImageView
         android:id="@+id/imageView4"
@@ -102,7 +71,7 @@
         android:contentDescription="@string/email"
         android:src="@drawable/ic_baseline_email_24"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/phone_text_layout" />
+        app:layout_constraintTop_toBottomOf="@+id/name_text_layout" />
 
     <TextView
         android:id="@+id/email"
@@ -144,7 +113,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="20sp"
         android:contentDescription="@string/password_register"
-        android:src="@drawable/ic_baseline_perm_identity_24"
+        android:src="@drawable/ic_baseline_lock_24"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/email_text_layout" />
 

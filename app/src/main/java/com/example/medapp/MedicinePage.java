@@ -12,26 +12,24 @@ import android.view.WindowManager;
 import android.widget.Button;
 
 public class MedicinePage extends AppCompatActivity {
-
-    private Button setrem;
+    Button button;
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_medicine_page);
-        setrem =findViewById(R.id.Editschedule);
         getSupportActionBar().hide();
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
         getWindow().setStatusBarColor(Color.TRANSPARENT);
         android.graphics.drawable.Drawable background = MedicinePage.this.getResources().getDrawable(R.drawable.color);
         getWindow().setBackgroundDrawable(background);
-        setContentView(R.layout.activity_main_screen);
+        button = findViewById(R.id.button3);
 
-        setrem.setOnClickListener(new View.OnClickListener() {
+        button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent=new Intent(MedicinePage.this,EditReminder.class);
+                Intent intent = new Intent(getApplicationContext(), EditReminder.class);
                 startActivity(intent);
             }
         });

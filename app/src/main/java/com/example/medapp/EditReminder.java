@@ -21,6 +21,5 @@ public class EditReminder extends AppCompatActivity {
         getWindow().setStatusBarColor(Color.TRANSPARENT);
         android.graphics.drawable.Drawable background = EditReminder.this.getResources().getDrawable(R.drawable.color);
         getWindow().setBackgroundDrawable(background);
-        setContentView(R.layout.activity_main_screen);
     }
 }

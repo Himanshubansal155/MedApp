@@ -20,11 +20,12 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.example.medapp.EditReminder;
+import com.example.medapp.LoginActivity;
 import com.example.medapp.MainActivity;
 import com.example.medapp.MedicinePage;
 import com.example.medapp.R;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -36,7 +37,7 @@ public class HomeFragment extends Fragment {
     int day, month, year, dayWeek;
     Calendar cldr;
     Button todayButton, monthButton, weekButton;
-    ImageButton imageButton;
+    ImageButton logOut;
     String[] days = {"Saturday", "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"};
 
     private HomeViewModel homeViewModel;
@@ -50,7 +51,7 @@ public class HomeFragment extends Fragment {
 
         TextView calendarDateDisplay = root.findViewById(R.id.calendarDateDisplay);
         TextView dayDisplay = root.findViewById(R.id.dayDisplay);
-        imageButton = root.findViewById(R.id.logout);
+        logOut = root.findViewById(R.id.logout);
         todayButton = root.findViewById(R.id.today);
         weekButton = root.findViewById(R.id.week);
         monthButton = root.findViewById(R.id.month);
@@ -58,12 +59,11 @@ public class HomeFragment extends Fragment {
 
         calendarDisplay(days, calendarDateDisplay, dayDisplay);
 
-        imageButton.setOnClickListener(new View.OnClickListener() {
+        logOut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 FirebaseAuth.getInstance().signOut();
-                Toast.makeText(getContext(), "Image Button Clicked", Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(getContext(), MedicinePage.class);
+                Intent intent = new Intent(getContext(), LoginActivity.class);
                 startActivity(intent);
             }
         });
@@ -159,6 +159,8 @@ public class HomeFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Toast.makeText(getContext(), "item clicked", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(getContext(), MedicinePage.class);
+                startActivity(intent);
             }
         });
     }

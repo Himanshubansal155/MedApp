@@ -1,6 +1,7 @@
 package com.example.medapp.ui.home;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +11,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.medapp.EditReminder;
+import com.example.medapp.LoginActivity;
+import com.example.medapp.MainActivity;
 import com.example.medapp.R;
 
 public class MyListAdapter extends ArrayAdapter<String> {
