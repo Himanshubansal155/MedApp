@@ -19,9 +19,18 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 public class MainScreen extends AppCompatActivity {
 
+
+    FirebaseAuth firebaseAuth;
+    Thread thread;
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,20 +42,29 @@ public class MainScreen extends AppCompatActivity {
         getWindow().setBackgroundDrawable(background);
         setContentView(R.layout.activity_main_screen);
 
+        firebaseAuth = FirebaseAuth.getInstance();
         Button skip = findViewById(R.id.skip);
         ImageButton next = findViewById(R.id.next);
         ImageButton next1 = findViewById(R.id.imageButton3);
         ImageButton next2 = findViewById(R.id.imageButton5);
 
-        Thread thread = new Thread(){
+        thread = new Thread() {
             @Override
             public void run() {
                 try {
-                    sleep(2000);
-                    Intent intent = new Intent(getApplicationContext(),MainScreen2.class);
-                    overridePendingTransition(R.anim.slide_out_left, R.anim.slide_out_left);
-                    startActivity(intent);
-                    finish();
+                    sleep(1500);
+                    FirebaseUser currentUser = firebaseAuth.getCurrentUser();
+                    GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(getApplicationContext());
+                    if (currentUser != null || account != null) {
+                        Intent intent = new Intent(MainScreen.this, LoginActivity.class);
+                        startActivity(intent);
+                    } else{
+                        Intent intent = new Intent(getApplicationContext(), MainScreen2.class);
+                        overridePendingTransition(R.anim.slide_out_left, R.anim.slide_out_left);
+                        startActivity(intent);
+                        finish();
+                    }
+
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }

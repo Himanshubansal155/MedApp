@@ -27,9 +27,8 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="233dp"
-            android:layout_marginTop="4dp"
-            android:background="@drawable/medicine"
+            android:layout_height="200dp"
+            android:layout_marginTop="5dp"
             android:baselineAligned="false"
             android:orientation="vertical">
 
@@ -42,6 +41,12 @@
                 android:theme="?attr/actionBarTheme"
                 app:title="Edit Reminder"
                 app:titleTextColor="@color/black" />
+
+            <ImageView
+                android:id="@+id/imageView3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:srcCompat="@drawable/doctorback" />
 
         </LinearLayout>
 
@@ -91,67 +96,72 @@
                 android:textSize="18sp"
                 android:textStyle="bold" />
 
-
             <HorizontalScrollView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:id="@+id/horizontalScrollView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
 
-
-                <LinearLayout
+                <RadioGroup
+                    android:id="@+id/rg"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:orientation="horizontal"
-                    android:scrollbarAlwaysDrawHorizontalTrack="true">
+                    android:padding="15dp">
 
-                    <ImageView
-                        android:id="@+id/imageView8"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                    <RadioButton
+                        android:id="@+id/pill1"
+                        android:layout_width="75dp"
+                        android:layout_height="75dp"
                         android:layout_margin="10dp"
-                        android:drawingCacheQuality="auto"
-                        android:padding="10dp"
-                        app:srcCompat="@drawable/pill1" />
+                        android:background="@drawable/pill1"
+                        android:button="@android:color/transparent"
+                        android:onClick="onClickMethod"
+                        android:paddingRight="10dp" />
 
-                    <ImageView
-                        android:id="@+id/imageView9"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                    <RadioButton
+                        android:id="@+id/pill2"
+                        android:layout_width="75dp"
+                        android:layout_height="75dp"
                         android:layout_margin="10dp"
-                        android:drawingCacheQuality="auto"
-                        android:padding="10dp"
-                        app:srcCompat="@drawable/pill3" />
+                        android:background="@drawable/pill2"
+                        android:button="@android:color/transparent"
+                        android:onClick="onClickMethod"
+                        android:paddingRight="10dp" />
 
-                    <ImageView
-                        android:id="@+id/imageView13"
-                        android:layout_width="65dp"
-                        android:layout_height="65dp"
+                    <RadioButton
+                        android:id="@+id/pill3"
+                        android:layout_width="75dp"
+                        android:layout_height="75dp"
                         android:layout_margin="10dp"
-                        android:drawingCacheQuality="auto"
-                        android:padding="10dp"
-                        app:srcCompat="@drawable/pill5" />
+                        android:background="@drawable/pill3"
+                        android:button="@android:color/transparent"
+                        android:onClick="onClickMethod"
+                        android:paddingRight="10dp" />
 
-                    <ImageView
-                        android:id="@+id/imageView12"
-                        android:layout_width="65dp"
-                        android:layout_height="65dp"
+                    <RadioButton
+                        android:id="@+id/pill4"
+                        android:layout_width="75dp"
+                        android:layout_height="75dp"
                         android:layout_margin="10dp"
-                        android:layout_weight="1"
-                        android:drawingCacheQuality="auto"
-                        android:padding="10dp"
-                        app:srcCompat="@drawable/pill2" />
+                        android:background="@drawable/pill4"
+                        android:button="@android:color/transparent"
+                        android:onClick="onClickMethod"
+                        android:paddingRight="10dp" />
 
-                    <ImageView
-                        android:id="@+id/imageView11"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                    <RadioButton
+                        android:id="@+id/pill5"
+                        android:layout_width="75dp"
+                        android:layout_height="75dp"
                         android:layout_margin="10dp"
-                        android:layout_weight="1"
-                        android:drawingCacheQuality="auto"
-                        android:padding="10dp"
-                        app:srcCompat="@drawable/pill4" />
-
-                </LinearLayout>
-
+                        android:background="@drawable/pill5"
+                        android:button="@android:color/transparent"
+                        android:onClick="onClickMethod"
+                        android:paddingRight="10dp" />
+                </RadioGroup>
             </HorizontalScrollView>
 
             <TextView
@@ -160,6 +170,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="15dp"
                 android:layout_marginLeft="15dp"
+                android:layout_marginTop="15dp"
                 android:layout_marginEnd="15dp"
                 android:layout_marginRight="15dp"
                 android:text="Time and Schedule"
@@ -168,42 +179,116 @@
                 android:textStyle="bold" />
 
 
+            <HorizontalScrollView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <Button
+                        android:id="@+id/afterDinnerButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginEnd="10dp"
+                        android:layout_marginRight="10dp"
+                        android:layout_weight="1"
+                        android:text="After DINNER"
+                        android:background="@drawable/btn_1_gradiant"
+                        app:backgroundTint="@color/dot_light_screen1" />
+
+                    <Button
+                        android:id="@+id/afterBreakfastButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginEnd="10dp"
+                        android:layout_marginRight="10dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/btn_1_gradiant"
+                        android:text="After BREAKFAST"
+                        app:backgroundTint="@color/dot_light_screen1" />
+
+                    <Button
+                        android:id="@+id/afterLunchButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginEnd="10dp"
+                        android:layout_marginRight="10dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/btn_1_gradiant"
+                        android:checkable="false"
+                        android:clickable="true"
+                        android:text="After Lunch"
+                        app:backgroundTint="@color/dot_light_screen1" />
+
+                    <Button
+                        android:id="@+id/beforeDinnerButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginEnd="10dp"
+                        android:layout_marginRight="10dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/btn_1_gradiant"
+                        android:checkable="false"
+                        android:clickable="true"
+                        android:text="Before DINNER"
+                        app:backgroundTint="@color/dot_light_screen1" />
+
+                    <Button
+                        android:id="@+id/beforeLunchButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginEnd="10dp"
+                        android:layout_marginRight="10dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/btn_1_gradiant"
+                        android:checkable="false"
+                        android:clickable="true"
+                        android:text="Before Lunch"
+                        app:backgroundTint="@color/dot_light_screen1" />
+
+                    <Button
+                        android:id="@+id/beforeBreakfastButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginEnd="10dp"
+                        android:layout_marginRight="10dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/btn_1_gradiant"
+                        android:checkable="false"
+                        android:clickable="true"
+                        android:text="Before Breakfast"
+                        app:backgroundTint="@color/dot_light_screen1" />
+                </LinearLayout>
+            </HorizontalScrollView>
+
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
                 android:orientation="horizontal">
 
-                <Button
-                    android:id="@+id/button10"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="10dp"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginEnd="10dp"
-                    android:layout_marginRight="10dp"
-                    android:layout_weight="1"
-                    android:background="@drawable/btn_1_gradiant"
-                    android:text="After DINNER" />
-
-                <Button
-                    android:id="@+id/button4"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="10dp"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginEnd="10dp"
-                    android:layout_marginRight="10dp"
-                    android:layout_weight="1"
-                    android:background="@drawable/btn_1_gradiant"
-                    android:text="After BREAKFAST" />
-
             </LinearLayout>
-
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
                 android:orientation="horizontal">
 
                 <TextView
@@ -285,11 +370,12 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
                 android:layout_marginLeft="20dp"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="20dp"
                 android:layout_marginEnd="20dp"
                 android:layout_marginRight="20dp"
                 android:background="@drawable/btn_1_gradiant"
-                android:text="Edit reminder" />
+                android:text="Edit reminder"
+                app:backgroundTint="@color/dot_light_screen1" />
 
         </LinearLayout>
 

@@ -102,7 +102,7 @@ public class RegisterActivity extends AppCompatActivity {
         } else if (confirm.getText().length() < 6) {
             confirmError.setError(getResources().getString(R.string.error_invalid_password));
             ispasswordConfirm = false;
-        } else if(confirm.getText().toString().equals(password.getText().toString())){
+        } else if (confirm.getText().toString().equals(password.getText().toString())) {
             ispasswordConfirm = true;
             passError.setErrorEnabled(false);
         }

@@ -16,6 +16,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.example.medapp.EditReminder;
 import com.example.medapp.MedicinePage;
 import com.example.medapp.R;
 import com.example.medapp.ui.home.MyListAdapter;
@@ -37,7 +38,7 @@ public class DashboardFragment extends Fragment {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getContext(), MedicinePage.class);
+                Intent intent = new Intent(getContext(), EditReminder.class);
                 startActivity(intent);
             }
         });
@@ -69,6 +70,8 @@ public class DashboardFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Toast.makeText(getContext(), "item clicked", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(getContext(), MedicinePage.class);
+                startActivity(intent);
             }
         });
         return root;

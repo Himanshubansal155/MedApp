@@ -24,21 +24,21 @@ public class MyListAdapter extends ArrayAdapter<String> {
     private final String[] button2Title;
     private final Integer[] imgId;
 
-    public MyListAdapter(Activity context, String[] mainTitle, String[] button1Title,String[] button2Title, Integer[] imgId) {
+    public MyListAdapter(Activity context, String[] mainTitle, String[] button1Title, String[] button2Title, Integer[] imgId) {
         super(context, R.layout.my_layout, mainTitle);
         // TODO Auto-generated constructor stub
 
-        this.context=context;
-        this.mainTitle =mainTitle;
-        this.button1Title=button1Title;
-        this.button2Title=button2Title;
-        this.imgId =imgId;
+        this.context = context;
+        this.mainTitle = mainTitle;
+        this.button1Title = button1Title;
+        this.button2Title = button2Title;
+        this.imgId = imgId;
 
     }
 
     public View getView(int position, View view, ViewGroup parent) {
-        LayoutInflater inflater=context.getLayoutInflater();
-        View rowView=inflater.inflate(R.layout.my_layout, null,true);
+        LayoutInflater inflater = context.getLayoutInflater();
+        View rowView = inflater.inflate(R.layout.my_layout, null, true);
 
         TextView titleText = (TextView) rowView.findViewById(R.id.title);
         ImageView imageView = (ImageView) rowView.findViewById(R.id.iconImage);
@@ -51,27 +51,22 @@ public class MyListAdapter extends ArrayAdapter<String> {
         button1Text.setText(button1Title[position]);
         button2Text.setText(button2Title[position]);
 
-        imageView1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(getContext(), "Icon clicked", Toast.LENGTH_SHORT).show();
-            }
-        });
-
         button1Text.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getContext(), "Button Clicked", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), button1Text.getText(), Toast.LENGTH_SHORT).show();
             }
         });
 
         button2Text.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getContext(), "Button Clicked", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), button2Text.getText(), Toast.LENGTH_SHORT).show();
             }
         });
 
         return rowView;
-    };
+    }
+
+    ;
 }

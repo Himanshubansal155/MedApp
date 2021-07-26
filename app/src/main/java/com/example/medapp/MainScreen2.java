@@ -30,12 +30,12 @@ public class MainScreen2 extends AppCompatActivity {
         ImageButton next1 = findViewById(R.id.imageButton4);
         ImageButton next2 = findViewById(R.id.imageButton5);
 
-        Thread thread = new Thread(){
+        Thread thread = new Thread() {
             @Override
             public void run() {
                 try {
                     sleep(2000);
-                    Intent intent = new Intent(getApplicationContext(),MainScreen3.class);
+                    Intent intent = new Intent(getApplicationContext(), MainScreen3.class);
                     overridePendingTransition(R.anim.slide_out_left, R.anim.slide_out_left);
                     startActivity(intent);
                     finish();
