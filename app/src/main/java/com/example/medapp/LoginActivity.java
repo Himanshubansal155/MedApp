@@ -24,6 +24,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.AuthCredential;
@@ -31,6 +32,12 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class LoginActivity extends AppCompatActivity {
     private static final int RC_SIGN_IN = 9001;
@@ -95,15 +102,18 @@ public class LoginActivity extends AppCompatActivity {
                         if (task.isSuccessful()) {
                             FirebaseUser user = firebaseAuth.getCurrentUser();
                             Toast.makeText(LoginActivity.this, "Authentication Sucessful", Toast.LENGTH_LONG).show();
-                            Toast.makeText(LoginActivity.this, user.getEmail(), Toast.LENGTH_SHORT).show();
-//                            UserProfileChangeRequest profileUpdate = new UserProfileChangeRequest.Builder().setDisplayName(name).build();
-//                            user.updateProfile(profileUpdate)
-//                                    .addOnCompleteListener(task1 -> {
-//                                        if (task1.isSuccessful()) {
-                            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                            startActivity(intent);
-//                                        }
-//                                    });
+                            DocumentReference docRef = FirebaseFirestore.getInstance().collection("Users").document(user.getEmail());
+                            Map<String, Object> map = new HashMap<>();
+                            map.put("Name", user.getDisplayName());
+                            map.put("Email", user.getEmail());
+                            Map<String, Object> medicinesName = new HashMap<>();
+                            medicinesName.put("Medicines", new ArrayList<String>());
+                            map.put("MedicineNames", medicinesName);
+                            docRef.set(map).addOnSuccessListener(unused -> {
+                                Toast.makeText(LoginActivity.this, "Registered Successfully", Toast.LENGTH_SHORT).show();
+                                Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+                                startActivity(intent);
+                            });
                         } else {
                             // If sign in fails, display a message to the user.
                             Toast.makeText(LoginActivity.this, "Sign In Failed", Toast.LENGTH_SHORT).show();

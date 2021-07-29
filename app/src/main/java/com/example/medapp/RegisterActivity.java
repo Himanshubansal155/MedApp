@@ -18,12 +18,19 @@ import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class RegisterActivity extends AppCompatActivity {
     EditText name, email, password, confirm;
@@ -116,22 +123,22 @@ public class RegisterActivity extends AppCompatActivity {
                             if (task.isSuccessful()) {
                                 // Sign in success, update UI with the signed-in details's information
                                 FirebaseUser user = mAuth.getCurrentUser();
-//
-                                Toast.makeText(RegisterActivity.this, "Registered Successfully", Toast.LENGTH_SHORT).show();
-
-                                UserProfileChangeRequest profileUpdate = new UserProfileChangeRequest.Builder().setDisplayName(details.getName()).build();
-                                user.updateProfile(profileUpdate)
-                                        .addOnCompleteListener(task1 -> {
-                                            if (task1.isSuccessful()) {
-                                                Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
-                                                startActivity(intent);
-                                                finish();
-                                            }
-                                        });
-
-
+                                DocumentReference docRef = FirebaseFirestore.getInstance().collection("Users").document(details.getEmail());
+                                Map<String, Object> map = new HashMap<>();
+                                map.put("Name", details.getName());
+                                map.put("Email", details.getEmail());
+                                Map<String, Object> medicinesName = new HashMap<String, Object>();
+                                medicinesName.put("Medicines", new ArrayList<String>());
+                                map.put("MedicineNames", medicinesName);
+                                docRef.set(map).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                    @Override
+                                    public void onSuccess(Void unused) {
+                                        Toast.makeText(RegisterActivity.this, "Registered Successfully", Toast.LENGTH_SHORT).show();
+                                        Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+                                        startActivity(intent);
+                                    }
+                                });
                             } else {
-//                                // If sign in fails, display a message to the details.
                                 Toast.makeText(RegisterActivity.this, "Authentication failed.",
                                         Toast.LENGTH_SHORT).show();
                             }

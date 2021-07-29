@@ -19,6 +19,7 @@ import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.example.medapp.LoginActivity;
 import com.example.medapp.MainActivity;
 import com.example.medapp.MedicinePage;
 import com.example.medapp.R;
@@ -58,6 +59,8 @@ public class HomeFragment extends Fragment {
 
     public void signOut() {
         FirebaseAuth.getInstance().signOut();
+        Intent intent = new Intent(getActivity(), LoginActivity.class);
+        startActivity(intent);
     }
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -141,7 +144,8 @@ public class HomeFragment extends Fragment {
         button1TitleList.clear();
         button2TitleList.clear();
         imgIdList.clear();
-        DocumentReference docRef = FirebaseFirestore.getInstance().collection("Users").document("Naman Agrawal");
+        String email= FirebaseAuth.getInstance().getCurrentUser().getEmail();
+        DocumentReference docRef = FirebaseFirestore.getInstance().collection("Users").document(email);
         docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @RequiresApi(api = Build.VERSION_CODES.O)
             @Override

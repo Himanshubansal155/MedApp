@@ -26,6 +26,7 @@ import com.example.medapp.ui.home.MyListAdapter;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -66,8 +67,8 @@ public class DashboardFragment extends Fragment {
         });
 
         listView = root.findViewById(R.id.medicineList);
-
-        DocumentReference docRef = FirebaseFirestore.getInstance().collection("Users").document("Naman Agrawal");
+        String email= FirebaseAuth.getInstance().getCurrentUser().getEmail();
+        DocumentReference docRef = FirebaseFirestore.getInstance().collection("Users").document(email);
         docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
