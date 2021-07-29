@@ -5,13 +5,10 @@ import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.Button;
-import android.widget.DatePicker;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -22,11 +19,9 @@ import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.example.medapp.LoginActivity;
 import com.example.medapp.MainActivity;
 import com.example.medapp.MedicinePage;
 import com.example.medapp.R;
-import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.Timestamp;
@@ -44,7 +39,6 @@ import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 
 public class HomeFragment extends Fragment {
     ListView listView;
@@ -95,13 +89,17 @@ public class HomeFragment extends Fragment {
         return root;
     }
 
-    private void listDisplay(List<String> mainTitleList, List<String> button1TitleList, List<String> button2TitleList, List<Integer> imgIdList, ListView listView) {
+    private void listDisplay(List<String> mainTitleList, List<String> button1TitleList, List<String> button2TitleList, List<Integer> imgIdList, ListView listView, Map<String, HashMap<String, Object>> medicineStore, List<String> group1) {
         MyListAdapter adapter = new MyListAdapter(getActivity(), mainTitleList.toArray(new String[0]), button1TitleList.toArray(new String[0]), button2TitleList.toArray(new String[0]), imgIdList.toArray(new Integer[0]));
         listView.setAdapter(adapter);
 
         listView.setOnItemClickListener((parent, view, position, id) -> {
-            Toast.makeText(getContext(), "item clicked", Toast.LENGTH_SHORT).show();
+            HashMap<String, Object> hashmap = medicineStore.get(group1.get((int) id));
             Intent intent = new Intent(getContext(), MedicinePage.class);
+            Bundle extras = new Bundle();
+            extras.putSerializable("hashMap", hashmap);
+            extras.putString("page", "HomeFragment");
+            intent.putExtras(extras);
             startActivity(intent);
         });
     }
@@ -191,13 +189,15 @@ public class HomeFragment extends Fragment {
                                 Toast.makeText(getContext(), "No Medicine Found", Toast.LENGTH_SHORT).show();
                             }
                         }
+                        List<String> group1 = new ArrayList<>();
                         lineDisplay(todayButton, weekButton, monthButton);
                         todayButton.setOnClickListener(v -> {
                             lineDisplay(todayButton, weekButton, monthButton);
                             showLists(listView);
                         });
-                        Map<String, HashMap<String, Object>> finalMedicineStore1 = medicineStore;
+                        Map<String, HashMap<String, Object>> finalMedicineStore = medicineStore;
                         weekButton.setOnClickListener(v -> {
+                            List<String> groups = new ArrayList<>();
                             lineDisplay(weekButton, todayButton, monthButton);
                             mainTitleList.clear();
                             button1TitleList.clear();
@@ -213,7 +213,7 @@ public class HomeFragment extends Fragment {
                             newDate.setDate(newDate.getDate() + 7);
                             for (String MedicineName : group) {
                                 Map<String, Object> medicineName;
-                                medicineName = finalMedicineStore1.get(MedicineName);
+                                medicineName = finalMedicineStore.get(MedicineName);
                                 assert medicineName != null;
                                 String name1 = medicineName.get("Name").toString();
                                 List<String> daysOfMedicine = (List<String>) medicineName.get("Time");
@@ -271,9 +271,12 @@ public class HomeFragment extends Fragment {
                                     }
                                 }
                             }
-                            listDisplay(mainTitleList, button1TitleList, button2TitleList, imgIdList, listView);
+
+                            groups.addAll(mainTitleList);
+                            listDisplay(mainTitleList, button1TitleList, button2TitleList, imgIdList, listView, finalMedicineStore, groups);
                         });
                         monthButton.setOnClickListener(v -> {
+                            List<String> groups = new ArrayList<>();
                             lineDisplay(monthButton, weekButton, todayButton);
                             mainTitleList.clear();
                             button1TitleList.clear();
@@ -291,7 +294,7 @@ public class HomeFragment extends Fragment {
                             assert group != null;
                             for (String MedicineName : group) {
                                 Map<String, Object> medicineName;
-                                medicineName = finalMedicineStore1.get(MedicineName);
+                                medicineName = finalMedicineStore.get(MedicineName);
                                 assert medicineName != null;
                                 String name1 = medicineName.get("Name").toString();
                                 List<String> daysOfMedicine = (List<String>) medicineName.get("Time");
@@ -349,17 +352,11 @@ public class HomeFragment extends Fragment {
                                     }
                                 }
                             }
-                            listDisplay(mainTitleList, button1TitleList, button2TitleList, imgIdList, listView);
+                            groups.addAll(mainTitleList);
+                            listDisplay(mainTitleList, button1TitleList, button2TitleList, imgIdList, listView, finalMedicineStore, groups);
                         });
-                        listDisplay(mainTitleList, button1TitleList, button2TitleList, imgIdList, listView);
-
-                        Map<String, HashMap<String, Object>> finalMedicineStore = medicineStore;
-                        listView.setOnItemClickListener((parent, view, position, id) -> {
-                            HashMap<String, Object> hashmap = finalMedicineStore.get(group.get((int) id));
-                            Intent intent = new Intent(getContext(), MedicinePage.class);
-                            intent.putExtra("hashMap", hashmap);
-                            startActivity(intent);
-                        });
+                        group1.addAll(mainTitleList);
+                        listDisplay(mainTitleList, button1TitleList, button2TitleList, imgIdList, listView, medicineStore, group1);
                     }
                 }
             }

@@ -6,6 +6,7 @@ import androidx.core.content.ContextCompat;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.os.Build;
@@ -54,6 +55,13 @@ public class EditReminder extends AppCompatActivity {
         beforeLunchButton.setOnClickListener(v -> beforeLunchSelected = afterClickChange(beforeLunchButton, beforeLunchSelected));
         beforeBreakfastButton.setOnClickListener(v -> beforeBreakfastSelected = afterClickChange(beforeBreakfastButton, beforeBreakfastSelected));
         beforeDinnerButton.setOnClickListener(v -> beforeDinnerSelected = afterClickChange(beforeDinnerButton, beforeDinnerSelected));
+
+        Bundle extras = getIntent().getExtras();
+        if(extras.getString("page").equals("Medicine")){
+            Toast.makeText(this, "From Medicine Page", Toast.LENGTH_SHORT).show();
+        } else if (extras.getString("page").equals("Dashboard")){
+            Toast.makeText(this, "From Dashboard Page", Toast.LENGTH_SHORT).show();
+        }
     }
 
     @SuppressLint("ResourceAsColor")

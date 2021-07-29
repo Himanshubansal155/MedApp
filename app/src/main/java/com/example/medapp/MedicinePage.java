@@ -31,7 +31,7 @@ import java.util.Map;
 public class MedicinePage extends AppCompatActivity {
     Button button;
     private final String TAG = "Firebase";
-    Map<String, Object> dataMap;
+    HashMap<String, Object> dataMap;
     TextView name;
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
@@ -50,12 +50,22 @@ public class MedicinePage extends AppCompatActivity {
 
         button.setOnClickListener(v -> {
             Intent intent = new Intent(getApplicationContext(), EditReminder.class);
+            Bundle extras = new Bundle();
+            extras.putSerializable("hashMap", dataMap);
+            extras.putString("page", "Medicine");
+            intent.putExtras(extras);
             startActivity(intent);
         });
 
-        Intent intent = getIntent();
-        if(intent != null) {
-            HashMap<String, Object> hashMap = (HashMap<String, Object>) intent.getSerializableExtra("hashMap");
+        Bundle extras = getIntent().getExtras();
+        if(extras.getString("page").equals("Dashboard")){
+            HashMap<String, Object> hashMap = (HashMap<String, Object>) extras.getSerializable("hashMap");
+            Toast.makeText(this, hashMap.toString(), Toast.LENGTH_SHORT).show();
+            name.setText(hashMap.get("Name").toString());
+        }
+        else if(extras.getString("page").equals("HomeFragment")){
+            Toast.makeText(this, extras.getString("page"), Toast.LENGTH_SHORT).show();
+            HashMap<String, Object> hashMap = (HashMap<String, Object>) extras.getSerializable("hashMap");
             Toast.makeText(this, hashMap.toString(), Toast.LENGTH_SHORT).show();
             name.setText(hashMap.get("Name").toString());
         }

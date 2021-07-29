@@ -40,7 +40,6 @@ import java.util.List;
 import java.util.Map;
 
 public class DashboardFragment extends Fragment {
-    private final String TAG = "Firebase";
     private DashboardViewModel dashboardViewModel;
     ListView listView;
     Map<String, Object> dataMap;
@@ -62,12 +61,11 @@ public class DashboardFragment extends Fragment {
         imgIdList = new ArrayList<>();
         fab.setOnClickListener(v -> {
             Intent intent = new Intent(getContext(), EditReminder.class);
+            intent.putExtra("page", "Dashboard");
             startActivity(intent);
         });
 
         listView = root.findViewById(R.id.medicineList);
-
-        Log.d("TAG", "Working");
 
         DocumentReference docRef = FirebaseFirestore.getInstance().collection("Users").document("Naman Agrawal");
         docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
@@ -100,17 +98,19 @@ public class DashboardFragment extends Fragment {
                             button2TitleList.add(timeStamp.get(1));
                             imgIdList.add(icon);
                         }
-                            MyListAdapter adapter = new MyListAdapter(getActivity(), mainTitleList.toArray(new String[0]), button1TitleList.toArray(new String[0]), button2TitleList.toArray(new String[0]), imgIdList.toArray(new Integer[0]));
-                            listView.setAdapter(adapter);
+                        MyListAdapter adapter = new MyListAdapter(getActivity(), mainTitleList.toArray(new String[0]), button1TitleList.toArray(new String[0]), button2TitleList.toArray(new String[0]), imgIdList.toArray(new Integer[0]));
+                        listView.setAdapter(adapter);
 
                         Map<String, HashMap<String, Object>> finalMedicineStore = medicineStore;
                         listView.setOnItemClickListener((parent, view, position, id) -> {
-//                            Toast.makeText(getContext(), group.get((int) id), Toast.LENGTH_SHORT).show();
                             HashMap<String, Object> hashmap = finalMedicineStore.get(group.get((int) id));
                             Intent intent = new Intent(getContext(), MedicinePage.class);
-                                intent.putExtra("hashMap", hashmap);
-                                startActivity(intent);
-                            });
+                            Bundle extras = new Bundle();
+                            extras.putSerializable("hashMap", hashmap);
+                            extras.putString("page", "Dashboard");
+                            intent.putExtras(extras);
+                            startActivity(intent);
+                        });
                     }
                 }
             }
