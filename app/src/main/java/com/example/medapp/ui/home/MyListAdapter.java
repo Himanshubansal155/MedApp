@@ -51,19 +51,11 @@ public class MyListAdapter extends ArrayAdapter<String> {
         button1Text.setText(button1Title[position]);
         button2Text.setText(button2Title[position]);
 
-        button1Text.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(getContext(), button1Text.getText(), Toast.LENGTH_SHORT).show();
-            }
-        });
+        imageView1.setOnClickListener(v -> Toast.makeText(context, "Delete the Medicine", Toast.LENGTH_SHORT).show());
 
-        button2Text.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(getContext(), button2Text.getText(), Toast.LENGTH_SHORT).show();
-            }
-        });
+        button1Text.setOnClickListener(v -> Toast.makeText(getContext(), button1Text.getText(), Toast.LENGTH_SHORT).show());
+
+        button2Text.setOnClickListener(v -> Toast.makeText(getContext(), button2Text.getText(), Toast.LENGTH_SHORT).show());
 
         return rowView;
     }

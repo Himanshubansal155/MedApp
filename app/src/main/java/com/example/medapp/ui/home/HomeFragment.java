@@ -3,6 +3,7 @@ package com.example.medapp.ui.home;
 
 import android.app.DatePickerDialog;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -17,6 +18,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -27,26 +29,40 @@ import com.example.medapp.R;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.Timestamp;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
 
+import org.jetbrains.annotations.NotNull;
+
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 public class HomeFragment extends Fragment {
-
     ListView listView;
     DatePickerDialog picker;
     int day, month, year, dayWeek;
     Calendar cldr;
     Button todayButton, monthButton, weekButton;
     ImageButton logOut;
-    String[] days = {"Saturday", "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"};
-    GoogleSignInClient mGoogleSignInClient;
+    String[] days = {"", "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"};
+    Map<String, Object> dataMap;
+    List<String> mainTitleList;
+    List<String> button1TitleList;
+    List<String> button2TitleList;
+    List<Integer> imgIdList;
 
     private HomeViewModel homeViewModel;
 
-    public void signOut(){
+    public void signOut() {
         FirebaseAuth.getInstance().signOut();
     }
 
@@ -64,89 +80,23 @@ public class HomeFragment extends Fragment {
         weekButton = root.findViewById(R.id.week);
         monthButton = root.findViewById(R.id.month);
         listView = root.findViewById(R.id.listview);
+        dataMap = new HashMap<>();
+        mainTitleList = new ArrayList<>();
+        button1TitleList = new ArrayList<>();
+        button2TitleList = new ArrayList<>();
+        imgIdList = new ArrayList<>();
 
         calendarDisplay(days, calendarDateDisplay, dayDisplay);
 
         logOut.setOnClickListener(v -> {
             signOut();
         });
-
-        String[] mainTitle = {
-                "Title 1", "Title 2"
-        };
-
-        String[] button1Title = {
-                "After Lunch", "After Lunch"
-        };
-        String[] button2Title = {
-                "After Dinner", "After Dinner"
-        };
-        Integer[] imgId = {
-                R.drawable.pill1, R.drawable.pill2
-        };
-        listDisplay(mainTitle, button1Title, button2Title, imgId, listView);
-
-        todayButton.setOnClickListener(v -> {
-            lineDisplay(todayButton, weekButton, monthButton);
-            String[] mainTitle1 = {
-                    "Title 1", "Title 2"
-            };
-
-            String[] button1Title1 = {
-                    "After Lunch", "After Lunch"
-            };
-            String[] button2Title1 = {
-                    "After Dinner", "After Dinner"
-            };
-            Integer[] imgId1 = {
-                    R.drawable.pill1, R.drawable.pill2
-            };
-            listDisplay(mainTitle1, button1Title1, button2Title1, imgId1, listView);
-        });
-        weekButton.setOnClickListener(v -> {
-            String[] mainTitle12 = {
-                    "Title 1", "Title 2",
-                    "Title 3"
-            };
-
-            String[] button1Title12 = {
-                    "After Lunch", "After Lunch", "After Lunch"
-            };
-            String[] button2Title12 = {
-                    "After Dinner", "After Dinner", "After Dinner"
-            };
-            Integer[] imgId12 = {
-                    R.drawable.pill1, R.drawable.pill2, R.drawable.pill3
-            };
-            lineDisplay(weekButton, todayButton, monthButton);
-            listDisplay(mainTitle12, button1Title12, button2Title12, imgId12, listView);
-        });
-        monthButton.setOnClickListener(v -> {
-            String[] mainTitle13 = {
-                    "Title 1", "Title 2",
-                    "Title 3", "Title 4",
-                    "Title 5",
-            };
-
-            String[] button1Title13 = {
-                    "After Lunch", "After Lunch", "After Lunch", "After Lunch", "After Lunch"
-            };
-            String[] button2Title13 = {
-                    "After Dinner", "After Dinner", "After Dinner", "After Dinner", "After Dinner"
-            };
-            Integer[] imgId13 = {
-                    R.drawable.pill1, R.drawable.pill2,
-                    R.drawable.pill3, R.drawable.pill4,
-                    R.drawable.pill5,
-            };
-            lineDisplay(monthButton, weekButton, todayButton);
-            listDisplay(mainTitle13, button1Title13, button2Title13, imgId13, listView);
-        });
+        showLists(listView);
         return root;
     }
 
-    private void listDisplay(String[] mainTitle, String[] button1Title, String[] button2Title, Integer[] imgId, ListView listView) {
-        MyListAdapter adapter = new MyListAdapter(getActivity(), mainTitle, button1Title, button2Title, imgId);
+    private void listDisplay(List<String> mainTitleList, List<String> button1TitleList, List<String> button2TitleList, List<Integer> imgIdList, ListView listView) {
+        MyListAdapter adapter = new MyListAdapter(getActivity(), mainTitleList.toArray(new String[0]), button1TitleList.toArray(new String[0]), button2TitleList.toArray(new String[0]), imgIdList.toArray(new Integer[0]));
         listView.setAdapter(adapter);
 
         listView.setOnItemClickListener((parent, view, position, id) -> {
@@ -168,24 +118,216 @@ public class HomeFragment extends Fragment {
         month = cldr.get(Calendar.MONTH);
         year = cldr.get(Calendar.YEAR);
         dayWeek = cldr.get(Calendar.DAY_OF_WEEK);
-        Log.d("HomeFragment", String.valueOf(dayWeek));
         calendarDateDisplay.setText(day + "/" + (month + 1) + "/" + year);
         dayDisplay.setText(days[dayWeek]);
 
         calendarDateDisplay.setOnClickListener(v -> {
-            cldr = Calendar.getInstance();
-            day = cldr.get(Calendar.DAY_OF_MONTH);
-            month = cldr.get(Calendar.MONTH);
-            year = cldr.get(Calendar.YEAR);
             // date picker dialog
             picker = new DatePickerDialog(getContext(),
                     (view, year, monthOfYear, dayOfMonth) -> {
                         calendarDateDisplay.setText(dayOfMonth + "/" + (monthOfYear + 1) + "/" + year);
-                        Date d = new Date(year, monthOfYear, dayOfMonth);
-                        Log.d("HomeFragment", String.valueOf(d.getDay()));
-                        dayDisplay.setText(days[d.getDay()]);
+                        cldr.set(year, monthOfYear, dayOfMonth);
+                        day = cldr.get(Calendar.DAY_OF_MONTH);
+                        month = cldr.get(Calendar.MONTH);
+                        this.year = cldr.get(Calendar.YEAR);
+                        dayWeek = cldr.get(Calendar.DAY_OF_WEEK);
+                        dayDisplay.setText(days[dayWeek]);
+                        showLists(listView);
                     }, year, month, day);
             picker.show();
         });
+    }
+
+    public void showLists(ListView listView) {
+        mainTitleList.clear();
+        button1TitleList.clear();
+        button2TitleList.clear();
+        imgIdList.clear();
+        DocumentReference docRef = FirebaseFirestore.getInstance().collection("Users").document("Naman Agrawal");
+        docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @RequiresApi(api = Build.VERSION_CODES.O)
+            @Override
+            public void onComplete(@NonNull @NotNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()) {
+                    DocumentSnapshot snap = task.getResult();
+                    assert snap != null;
+                    if (snap.exists()) {
+                        dataMap = snap.getData();
+                        assert dataMap != null;
+                        String name = dataMap.get("Name").toString();
+                        Map<String, HashMap<String, Object>> medicineStore = new HashMap<>();
+                        medicineStore = (Map<String, HashMap<String, Object>>) dataMap.get("MedicineNames");
+                        List<String> group = (List<String>) medicineStore.get("Medicines");
+                        assert group != null;
+                        for (String MedicineName : group) {
+                            Map<String, Object> medicineName;
+                            medicineName = medicineStore.get(MedicineName);
+                            assert medicineName != null;
+                            String name1 = medicineName.get("Name").toString();
+                            List<String> daysOfMedicine = (List<String>) medicineName.get("Time");
+                            Date endDate = ((Timestamp) medicineName.get("EndDate")).toDate();
+                            Date startDate = ((Timestamp) medicineName.get("StartDate")).toDate();
+                            startDate = new Date(startDate.getYear(), startDate.getMonth(), startDate.getDate());
+                            endDate = new Date(endDate.getYear(), endDate.getMonth(), endDate.getDate());
+                            cldr.set(Calendar.HOUR_OF_DAY, 0);
+                            cldr.set(Calendar.MINUTE, 0);
+                            cldr.set(Calendar.SECOND, 0);
+                            cldr.set(Calendar.MILLISECOND, 0);
+                            if (getDateBetweenDates(startDate, endDate, cldr.getTime())) {
+                                for (String str : daysOfMedicine) {
+                                    if (str.equals(days[cldr.get(Calendar.DAY_OF_WEEK)])) {
+                                        String iconString = medicineName.get("Icon").toString();
+                                        Integer icon = Integer.valueOf(iconString);
+                                        mainTitleList.add(name1);
+                                        List<String> timeStamp;
+                                        timeStamp = (List<String>) medicineName.get("TimingSchedule");
+                                        assert timeStamp != null;
+                                        button1TitleList.add(timeStamp.get(0));
+                                        button2TitleList.add(timeStamp.get(1));
+                                        imgIdList.add(icon);
+                                    }
+                                }
+                            } else {
+                                Toast.makeText(getContext(), "No Medicine Found", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                        lineDisplay(todayButton, weekButton, monthButton);
+                        todayButton.setOnClickListener(v -> {
+                            lineDisplay(todayButton, weekButton, monthButton);
+                            showLists(listView);
+                        });
+                        Map<String, HashMap<String, Object>> finalMedicineStore1 = medicineStore;
+                        weekButton.setOnClickListener(v -> {
+                            lineDisplay(weekButton, todayButton, monthButton);
+                            mainTitleList.clear();
+                            button1TitleList.clear();
+                            button2TitleList.clear();
+                            imgIdList.clear();
+                            Date newDate = cldr.getTime();
+                            newDate.setDate(newDate.getDate() + (7 - cldr.get(Calendar.DAY_OF_WEEK)));
+                            List<Date> dates = new ArrayList<>();
+                            while (dates.size() != 7) {
+                                dates.add(newDate);
+                                newDate = new Date(newDate.getYear(), newDate.getMonth(), newDate.getDate() - 1);
+                            }
+                            newDate.setDate(newDate.getDate() + 7);
+                            for (String MedicineName : group) {
+                                Map<String, Object> medicineName;
+                                medicineName = finalMedicineStore1.get(MedicineName);
+                                assert medicineName != null;
+                                String name1 = medicineName.get("Name").toString();
+                                List<String> daysOfMedicine = (List<String>) medicineName.get("Time");
+                                Date endDate = ((Timestamp) medicineName.get("EndDate")).toDate();
+                                Date startDate = ((Timestamp) medicineName.get("StartDate")).toDate();
+                                startDate = new Date(startDate.getYear(), startDate.getMonth(), startDate.getDate());
+                                endDate = new Date(endDate.getYear(), endDate.getMonth(), endDate.getDate());
+                                if (getDateBetweenDates(startDate, endDate, newDate)) {
+                                    assert daysOfMedicine != null;
+                                    loop:
+                                    for (String str : daysOfMedicine) {
+                                        for (Date date : dates) {
+                                            if (str.equals(days[date.getDay() + 1])) {
+                                                String iconString = medicineName.get("Icon").toString();
+                                                Integer icon = Integer.valueOf(iconString);
+                                                mainTitleList.add(name1);
+                                                List<String> timeStamp;
+                                                timeStamp = (List<String>) medicineName.get("TimingSchedule");
+                                                assert timeStamp != null;
+                                                button1TitleList.add(timeStamp.get(0));
+                                                button2TitleList.add(timeStamp.get(1));
+                                                imgIdList.add(icon);
+                                                break loop;
+                                            }
+                                        }
+                                    }
+                                } else {
+                                    assert daysOfMedicine != null;
+                                    loop:
+                                    for (String str : daysOfMedicine) {
+                                        for (Date date : dates) {
+                                            if (endDate.equals(date)) {
+                                                break loop;
+                                            }
+                                            if (getDateBetweenDates(startDate, endDate, date)) {
+                                                if (str.equals(days[date.getDay() + 1])) {
+                                                    String iconString = medicineName.get("Icon").toString();
+                                                    Integer icon = Integer.valueOf(iconString);
+                                                    mainTitleList.add(name1);
+                                                    List<String> timeStamp;
+                                                    timeStamp = (List<String>) medicineName.get("TimingSchedule");
+                                                    assert timeStamp != null;
+                                                    button1TitleList.add(timeStamp.get(0));
+                                                    button2TitleList.add(timeStamp.get(1));
+                                                    imgIdList.add(icon);
+                                                    break loop;
+                                                }
+                                            } else {
+                                                break loop;
+                                            }
+                                        }
+                                    }
+                                    if (mainTitleList.isEmpty()) {
+                                        Toast.makeText(getContext(), "No medicine Found", Toast.LENGTH_SHORT).show();
+                                    }
+                                }
+                            }
+                            listDisplay(mainTitleList, button1TitleList, button2TitleList, imgIdList, listView);
+                        });
+                        monthButton.setOnClickListener(v -> {
+                            lineDisplay(monthButton, weekButton, todayButton);
+                            mainTitleList.clear();
+                            button1TitleList.clear();
+                            button2TitleList.clear();
+                            imgIdList.clear();
+                            assert group != null;
+                            for (String MedicineName : group) {
+                                Map<String, Object> medicineName;
+                                medicineName = finalMedicineStore1.get(MedicineName);
+                                assert medicineName != null;
+                                String name1 = medicineName.get("Name").toString();
+                                String iconString = medicineName.get("Icon").toString();
+                                Integer icon = Integer.valueOf(iconString);
+                                mainTitleList.add(name1);
+                                List<String> timeStamp;
+                                timeStamp = (List<String>) medicineName.get("TimingSchedule");
+                                assert timeStamp != null;
+                                button1TitleList.add(timeStamp.get(0));
+                                button2TitleList.add(timeStamp.get(1));
+                                imgIdList.add(icon);
+                            }
+                            listDisplay(mainTitleList, button1TitleList, button2TitleList, imgIdList, listView);
+                        });
+                        listDisplay(mainTitleList, button1TitleList, button2TitleList, imgIdList, listView);
+
+                        Map<String, HashMap<String, Object>> finalMedicineStore = medicineStore;
+                        listView.setOnItemClickListener((parent, view, position, id) -> {
+                            HashMap<String, Object> hashmap = finalMedicineStore.get(group.get((int) id));
+                            Intent intent = new Intent(getContext(), MedicinePage.class);
+                            intent.putExtra("hashMap", hashmap);
+                            startActivity(intent);
+                        });
+                    }
+                }
+            }
+        });
+    }
+
+    public boolean getDateBetweenDates(Date startdate, Date enddate, Date givenDate) {
+        List<Date> dates = new ArrayList<>();
+        Calendar calendar = new GregorianCalendar();
+        calendar.setTime(startdate);
+
+        while (calendar.getTime().before(enddate)) {
+            Date result = calendar.getTime();
+            dates.add(result);
+            calendar.add(Calendar.DATE, 1);
+        }
+
+        for (Date date : dates) {
+            if (date.equals(givenDate)) {
+                return true;
+            }
+        }
+        return false;
     }
 }

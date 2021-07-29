@@ -92,7 +92,7 @@
                 android:background="@android:color/transparent"
                 android:drawableBottom="@android:drawable/button_onoff_indicator_on"
                 android:fontFamily="@font/alegreya_sans"
-                android:text="Today"
+                android:text="This"
                 android:textColor="#ffffff"
                 app:backgroundTint="@null" />
 
