@@ -59,22 +59,9 @@
                 android:layout_marginLeft="15dp"
                 android:layout_marginEnd="15dp"
                 android:layout_marginRight="15dp"
-                android:text="Paracetamol"
+                android:text="Medicine Name"
                 android:textColor="#050505"
                 android:textSize="24sp" />
-
-            <TextView
-                android:id="@+id/textview8"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:layout_marginStart="15dp"
-                android:layout_marginLeft="15dp"
-                android:layout_marginEnd="15dp"
-                android:layout_marginRight="15dp"
-                android:text="@string/lorem_lpsum_is_simly_dummy_text_of_the_printing_and_typesetting_industry_lorem_lpum_has_beem"
-                android:textColor="#B90E0E0E"
-                android:textSize="14sp" />
 
 
             <LinearLayout
@@ -96,6 +83,27 @@
                     android:gravity="center"
                     android:text="After Breakfast"
                     android:textColor="#022761" />
+
+                <TextView
+                    android:id="@+id/After_Lunch"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginEnd="15dp"
+                    android:layout_marginRight="15dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/btn_1_gradiant"
+                    android:gravity="center"
+                    android:text="After Lunch"
+                    android:textColor="#87414A"  />
+
+                <Button
+                    android:id="@+id/sout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="signout" />
 
                 <TextView
                     android:id="@+id/AfterDinner"
@@ -192,7 +200,7 @@
             </LinearLayout>
 
             <Button
-                android:id="@+id/button3"
+                android:id="@+id/Editreminder"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
