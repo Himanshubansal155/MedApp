@@ -279,21 +279,75 @@ public class HomeFragment extends Fragment {
                             button1TitleList.clear();
                             button2TitleList.clear();
                             imgIdList.clear();
+                            int lastDate = cldr.getActualMaximum(Calendar.DATE);
+                            Date newDate = cldr.getTime();
+                            newDate.setDate(1);
+                            List<Date> dates = new ArrayList<>();
+                            while (dates.size() != lastDate) {
+                                dates.add(newDate);
+                                newDate = new Date(newDate.getYear(), newDate.getMonth(), newDate.getDate() + 1);
+                            }
+                            newDate.setDate(newDate.getDate() - 1);
                             assert group != null;
                             for (String MedicineName : group) {
                                 Map<String, Object> medicineName;
                                 medicineName = finalMedicineStore1.get(MedicineName);
                                 assert medicineName != null;
                                 String name1 = medicineName.get("Name").toString();
-                                String iconString = medicineName.get("Icon").toString();
-                                Integer icon = Integer.valueOf(iconString);
-                                mainTitleList.add(name1);
-                                List<String> timeStamp;
-                                timeStamp = (List<String>) medicineName.get("TimingSchedule");
-                                assert timeStamp != null;
-                                button1TitleList.add(timeStamp.get(0));
-                                button2TitleList.add(timeStamp.get(1));
-                                imgIdList.add(icon);
+                                List<String> daysOfMedicine = (List<String>) medicineName.get("Time");
+                                Date endDate = ((Timestamp) medicineName.get("EndDate")).toDate();
+                                Date startDate = ((Timestamp) medicineName.get("StartDate")).toDate();
+                                startDate = new Date(startDate.getYear(), startDate.getMonth(), startDate.getDate());
+                                endDate = new Date(endDate.getYear(), endDate.getMonth(), endDate.getDate());
+                                if (getDateBetweenDates(startDate, endDate, newDate)) {
+                                    assert daysOfMedicine != null;
+                                    loop:
+                                    for (String str : daysOfMedicine) {
+                                        for (Date date : dates) {
+                                            if (str.equals(days[date.getDay() + 1])) {
+                                                String iconString = medicineName.get("Icon").toString();
+                                                Integer icon = Integer.valueOf(iconString);
+                                                mainTitleList.add(name1);
+                                                List<String> timeStamp;
+                                                timeStamp = (List<String>) medicineName.get("TimingSchedule");
+                                                assert timeStamp != null;
+                                                button1TitleList.add(timeStamp.get(0));
+                                                button2TitleList.add(timeStamp.get(1));
+                                                imgIdList.add(icon);
+                                                break loop;
+                                            }
+                                        }
+                                    }
+                                } else {
+                                    assert daysOfMedicine != null;
+                                    loop:
+                                    for (String str : daysOfMedicine) {
+                                        for (Date date : dates) {
+                                            if (endDate.equals(date)) {
+                                                break loop;
+                                            }
+                                            if (getDateBetweenDates(startDate, endDate, date)) {
+                                                if (str.equals(days[date.getDay() + 1])) {
+                                                    String iconString = medicineName.get("Icon").toString();
+                                                    Integer icon = Integer.valueOf(iconString);
+                                                    mainTitleList.add(name1);
+                                                    List<String> timeStamp;
+                                                    timeStamp = (List<String>) medicineName.get("TimingSchedule");
+                                                    assert timeStamp != null;
+                                                    button1TitleList.add(timeStamp.get(0));
+                                                    button2TitleList.add(timeStamp.get(1));
+                                                    imgIdList.add(icon);
+                                                    break loop;
+                                                }
+                                            } else {
+                                                break loop;
+                                            }
+                                        }
+                                    }
+                                    if (mainTitleList.isEmpty()) {
+                                        Toast.makeText(getContext(), "No medicine Found", Toast.LENGTH_SHORT).show();
+                                    }
+                                }
                             }
                             listDisplay(mainTitleList, button1TitleList, button2TitleList, imgIdList, listView);
                         });
