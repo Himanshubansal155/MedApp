@@ -65,7 +65,7 @@
         app:backgroundTint="#4286f4" />
 
     <Button
-        android:id="@+id/button3"
+        android:id="@+id/Editreminder"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="50dp"
