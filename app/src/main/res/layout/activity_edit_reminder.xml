@@ -138,6 +138,7 @@
                             android:layout_margin="10dp"
                             android:background="@drawable/pill3"
                             android:button="@android:color/transparent"
+                            android:checked="false"
                             android:onClick="onClickMethod"
                             android:paddingRight="10dp" />
 
@@ -200,7 +201,7 @@
                             android:layout_marginRight="10dp"
                             android:layout_weight="1"
                             android:background="@drawable/btn_1_gradiant"
-                            android:text="After DINNER"
+                            android:text="After Dinner"
                             app:backgroundTint="@color/dot_light_screen1" />
 
                         <Button
@@ -213,8 +214,8 @@
                             android:layout_marginRight="10dp"
                             android:layout_weight="1"
                             android:background="@drawable/btn_1_gradiant"
-                            android:text="After BREAKFAST"
-                            app:backgroundTint="@color/dot_light_screen1" />
+                            android:text="After Breakfast"
+                            app:backgroundTint="@color/dot_dark_screen3" />
 
                         <Button
                             android:id="@+id/afterLunchButton"
@@ -243,8 +244,8 @@
                             android:background="@drawable/btn_1_gradiant"
                             android:checkable="false"
                             android:clickable="true"
-                            android:text="Before DINNER"
-                            app:backgroundTint="@color/dot_light_screen1" />
+                            android:text="Before Dinner"
+                            app:backgroundTint="@color/dot_dark_screen3" />
 
                         <Button
                             android:id="@+id/beforeLunchButton"
@@ -274,7 +275,7 @@
                             android:checkable="false"
                             android:clickable="true"
                             android:text="Before Breakfast"
-                            app:backgroundTint="@color/dot_light_screen1" />
+                            app:backgroundTint="@color/dot_dark_screen3" />
 
                     </LinearLayout>
 
@@ -417,7 +418,7 @@
                             android:layout_weight="1"
                             android:background="@drawable/btn_1_gradiant"
                             android:text="Tuesday"
-                            app:backgroundTint="@color/dot_light_screen1" />
+                            app:backgroundTint="@color/dot_dark_screen3" />
 
                         <Button
                             android:id="@+id/wednesdayButton"
@@ -446,8 +447,8 @@
                             android:background="@drawable/btn_1_gradiant"
                             android:checkable="false"
                             android:clickable="true"
-                            android:text="Thrusday"
-                            app:backgroundTint="@color/dot_light_screen1" />
+                            android:text="Thursday"
+                            app:backgroundTint="@color/dot_dark_screen3" />
 
                         <Button
                             android:id="@+id/fridayButton"
@@ -477,7 +478,7 @@
                             android:checkable="false"
                             android:clickable="true"
                             android:text="Saturday"
-                            app:backgroundTint="@color/dot_light_screen1" />
+                            app:backgroundTint="@color/dot_dark_screen3" />
 
                         <Button
                             android:id="@+id/sundayButton"

@@ -67,7 +67,7 @@ public class DashboardFragment extends Fragment {
         });
 
         listView = root.findViewById(R.id.medicineList);
-        String email= FirebaseAuth.getInstance().getCurrentUser().getEmail();
+        String email = FirebaseAuth.getInstance().getCurrentUser().getEmail();
         DocumentReference docRef = FirebaseFirestore.getInstance().collection("Users").document(email);
         docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @RequiresApi(api = Build.VERSION_CODES.O)
@@ -99,10 +99,11 @@ public class DashboardFragment extends Fragment {
                             button2TitleList.add(timeStamp.get(1));
                             imgIdList.add(icon);
                         }
-                        MyListAdapter adapter = new MyListAdapter(getActivity(), mainTitleList.toArray(new String[0]), button1TitleList.toArray(new String[0]), button2TitleList.toArray(new String[0]), imgIdList.toArray(new Integer[0]));
-                        listView.setAdapter(adapter);
 
                         Map<String, HashMap<String, Object>> finalMedicineStore = medicineStore;
+                        MyListAdapter adapter = new MyListAdapter(getActivity(), group, finalMedicineStore, mainTitleList.toArray(new String[0]), button1TitleList.toArray(new String[0]), button2TitleList.toArray(new String[0]), imgIdList.toArray(new Integer[0]));
+                        listView.setAdapter(adapter);
+
                         listView.setOnItemClickListener((parent, view, position, id) -> {
                             HashMap<String, Object> hashmap = finalMedicineStore.get(group.get((int) id));
                             Intent intent = new Intent(getContext(), MedicinePage.class);

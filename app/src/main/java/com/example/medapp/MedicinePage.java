@@ -44,30 +44,28 @@ public class MedicinePage extends AppCompatActivity {
         getWindow().setStatusBarColor(Color.TRANSPARENT);
         android.graphics.drawable.Drawable background = MedicinePage.this.getResources().getDrawable(R.drawable.color);
         getWindow().setBackgroundDrawable(background);
-        button = findViewById(R.id.button3);
+        button = findViewById(R.id.Editreminder);
         name = findViewById(R.id.Name);
         dataMap = new HashMap<>();
-
-        button.setOnClickListener(v -> {
-            Intent intent = new Intent(getApplicationContext(), EditReminder.class);
-            Bundle extras = new Bundle();
-            extras.putSerializable("hashMap", dataMap);
-            extras.putString("page", "Medicine");
-            intent.putExtras(extras);
-            startActivity(intent);
-        });
+        HashMap<String, Object> hashMap = new HashMap<>();
 
         Bundle extras = getIntent().getExtras();
-        if(extras.getString("page").equals("Dashboard")){
-            HashMap<String, Object> hashMap = (HashMap<String, Object>) extras.getSerializable("hashMap");
-            Toast.makeText(this, hashMap.toString(), Toast.LENGTH_SHORT).show();
+        if (extras.getString("page").equals("Dashboard")) {
+            hashMap = (HashMap<String, Object>) extras.getSerializable("hashMap");
+            name.setText(hashMap.get("Name").toString());
+        } else if (extras.getString("page").equals("HomeFragment")) {
+            hashMap = (HashMap<String, Object>) extras.getSerializable("hashMap");
             name.setText(hashMap.get("Name").toString());
         }
-        else if(extras.getString("page").equals("HomeFragment")){
-            Toast.makeText(this, extras.getString("page"), Toast.LENGTH_SHORT).show();
-            HashMap<String, Object> hashMap = (HashMap<String, Object>) extras.getSerializable("hashMap");
-            Toast.makeText(this, hashMap.toString(), Toast.LENGTH_SHORT).show();
-            name.setText(hashMap.get("Name").toString());
-        }
+
+        HashMap<String, Object> finalHashMap = hashMap;
+        button.setOnClickListener(v -> {
+            Intent intent = new Intent(getApplicationContext(), EditReminder.class);
+            Bundle extras1 = new Bundle();
+            extras1.putSerializable("hashMap", finalHashMap);
+            extras1.putString("page", "Medicine");
+            intent.putExtras(extras1);
+            startActivity(intent);
+        });
     }
 }

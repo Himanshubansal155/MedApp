@@ -93,7 +93,7 @@ public class HomeFragment extends Fragment {
     }
 
     private void listDisplay(List<String> mainTitleList, List<String> button1TitleList, List<String> button2TitleList, List<Integer> imgIdList, ListView listView, Map<String, HashMap<String, Object>> medicineStore, List<String> group1) {
-        MyListAdapter adapter = new MyListAdapter(getActivity(), mainTitleList.toArray(new String[0]), button1TitleList.toArray(new String[0]), button2TitleList.toArray(new String[0]), imgIdList.toArray(new Integer[0]));
+        MyListAdapter adapter = new MyListAdapter(getActivity(), group1, medicineStore, mainTitleList.toArray(new String[0]), button1TitleList.toArray(new String[0]), button2TitleList.toArray(new String[0]), imgIdList.toArray(new Integer[0]));
         listView.setAdapter(adapter);
 
         listView.setOnItemClickListener((parent, view, position, id) -> {
@@ -144,7 +144,7 @@ public class HomeFragment extends Fragment {
         button1TitleList.clear();
         button2TitleList.clear();
         imgIdList.clear();
-        String email= FirebaseAuth.getInstance().getCurrentUser().getEmail();
+        String email = FirebaseAuth.getInstance().getCurrentUser().getEmail();
         DocumentReference docRef = FirebaseFirestore.getInstance().collection("Users").document(email);
         docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @RequiresApi(api = Build.VERSION_CODES.O)

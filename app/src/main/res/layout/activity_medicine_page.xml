@@ -98,13 +98,6 @@
                     android:text="After Lunch"
                     android:textColor="#87414A"  />
 
-                <Button
-                    android:id="@+id/sout"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="signout" />
-
                 <TextView
                     android:id="@+id/AfterDinner"
                     android:layout_width="wrap_content"
