@@ -23,6 +23,9 @@ import com.example.medapp.LoginActivity;
 import com.example.medapp.MainActivity;
 import com.example.medapp.MedicinePage;
 import com.example.medapp.R;
+import com.google.android.gms.auth.api.Auth;
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.Timestamp;
@@ -59,6 +62,7 @@ public class HomeFragment extends Fragment {
 
     public void signOut() {
         FirebaseAuth.getInstance().signOut();
+//        Auth.GoogleSignInApi.signOut()
         Intent intent = new Intent(getActivity(), LoginActivity.class);
         startActivity(intent);
     }

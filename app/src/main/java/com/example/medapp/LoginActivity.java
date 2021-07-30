@@ -33,7 +33,11 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.SetOptions;
+
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -84,7 +88,6 @@ public class LoginActivity extends AppCompatActivity {
     private void handleSignInResult(Task<GoogleSignInAccount> completedTask) {
         try {
             GoogleSignInAccount account = completedTask.getResult(ApiException.class);
-            Toast.makeText(this, "SIgn in completed", Toast.LENGTH_LONG).show();
             firebaseAuthWithGoogle(account.getIdToken(), account.getDisplayName());
             // Signed in successfully, show authenticated UI.
         } catch (ApiException e) {
@@ -96,28 +99,41 @@ public class LoginActivity extends AppCompatActivity {
     private void firebaseAuthWithGoogle(String idToken, String name) {
         AuthCredential credential = GoogleAuthProvider.getCredential(idToken, null);
         firebaseAuth.signInWithCredential(credential)
-                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            FirebaseUser user = firebaseAuth.getCurrentUser();
-                            Toast.makeText(LoginActivity.this, "Authentication Sucessful", Toast.LENGTH_LONG).show();
-                            DocumentReference docRef = FirebaseFirestore.getInstance().collection("Users").document(user.getEmail());
-                            Map<String, Object> map = new HashMap<>();
-                            map.put("Name", user.getDisplayName());
-                            map.put("Email", user.getEmail());
-                            Map<String, Object> medicinesName = new HashMap<>();
-                            medicinesName.put("Medicines", new ArrayList<String>());
-                            map.put("MedicineNames", medicinesName);
-                            docRef.set(map).addOnSuccessListener(unused -> {
-                                Toast.makeText(LoginActivity.this, "Registered Successfully", Toast.LENGTH_SHORT).show();
-                                Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
-                                startActivity(intent);
-                            });
-                        } else {
-                            // If sign in fails, display a message to the user.
-                            Toast.makeText(LoginActivity.this, "Sign In Failed", Toast.LENGTH_SHORT).show();
-                        }
+                .addOnCompleteListener(this, task -> {
+                    if (task.isSuccessful()) {
+                        FirebaseUser user = firebaseAuth.getCurrentUser();
+                        DocumentReference docRef = FirebaseFirestore.getInstance().collection("Users").document(user.getEmail());
+                        docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                            @Override
+                            public void onComplete(@NonNull @NotNull Task<DocumentSnapshot> task) {
+                                if(task.isSuccessful()){
+                                    DocumentSnapshot snap = task.getResult();
+                                    assert snap != null;
+                                    if (snap.exists()) {
+                                        Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+                                        startActivity(intent);
+                                    } else {
+                                        Map<String, Object> map = new HashMap<>();
+                                        map.put("Name", user.getDisplayName());
+                                        map.put("Email", user.getEmail());
+                                        Map<String, Object> medicinesName = new HashMap<>();
+                                        medicinesName.put("Medicines", new ArrayList<String>());
+                                        map.put("MedicineNames", medicinesName);
+                                        docRef.set(map, SetOptions.merge()).addOnSuccessListener(unused -> {
+                                            Toast.makeText(LoginActivity.this, "Registered Successfully", Toast.LENGTH_SHORT).show();
+                                            Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+                                            startActivity(intent);
+                                        });
+                                    }
+                                } else{
+
+                                }
+                            }
+                        });
+
+                    } else {
+                        // If sign in fails, display a message to the user.
+                        Toast.makeText(LoginActivity.this, "Sign In Failed", Toast.LENGTH_SHORT).show();
                     }
                 });
     }
@@ -147,12 +163,7 @@ public class LoginActivity extends AppCompatActivity {
         passError = findViewById(R.id.user_id_password_layout);
         firebaseAuth = FirebaseAuth.getInstance();
 
-        signInButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                signIn();
-            }
-        });
+        signInButton.setOnClickListener(v -> signIn());
         // Configure sign-in to request the user's ID, email address, and basic
 // profile. ID and basic profile are included in DEFAULT_SIGN_IN.
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -161,12 +172,9 @@ public class LoginActivity extends AppCompatActivity {
                 .build();
         // Build a GoogleSignInClient with the options specified by gso.
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
-        sign_up.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
-                startActivity(intent);
-            }
+        sign_up.setOnClickListener(v -> {
+            Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
+            startActivity(intent);
         });
 
         login_btn.setOnClickListener(new View.OnClickListener() {
@@ -175,6 +183,11 @@ public class LoginActivity extends AppCompatActivity {
                 setValidation();
             }
         });
+    }
+
+    public void signOut(){
+        firebaseAuth.signOut();
+        mGoogleSignInClient.signOut();
     }
 
     public void setValidation() {

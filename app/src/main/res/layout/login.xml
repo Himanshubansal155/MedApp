@@ -147,34 +147,23 @@
         android:layout_height="30dp"
         android:layout_marginTop="10dp"
         android:src="@drawable/g"
-        app:layout_constraintEnd_toStartOf="@+id/facebook"
-        app:layout_constraintHorizontal_bias="0.9"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/option" />
-
-
-    <ImageView
-        android:id="@+id/facebook"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:layout_marginTop="10dp"
-        android:src="@drawable/fb"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.6"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/option" />
+
 
     <Button
         android:id="@+id/login_btn"
         android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:layout_marginLeft="40dp"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="28dp"
         android:layout_marginRight="20dp"
         android:text="@string/login"
+        app:layout_constraintHorizontal_bias="0.458"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/facebook" />
+        app:layout_constraintTop_toBottomOf="@+id/sign_in_button" />
 
     <TextView
         android:id="@+id/textView7"
