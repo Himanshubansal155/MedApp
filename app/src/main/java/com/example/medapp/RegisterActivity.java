@@ -30,6 +30,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class RegisterActivity extends AppCompatActivity {
@@ -51,14 +52,14 @@ public class RegisterActivity extends AppCompatActivity {
         getWindow().setBackgroundDrawable(background);
 
         register_btn = findViewById(R.id.register_btn);
-        name = (EditText) findViewById(R.id.name_edit_text);
-        email = (EditText) findViewById(R.id.email_edit_text);
-        password = (EditText) findViewById(R.id.password_edit_text);
-        confirm = (EditText) findViewById(R.id.confirm_edit_text);
-        nameError = (TextInputLayout) findViewById(R.id.name_text_layout);
-        emailError = (TextInputLayout) findViewById(R.id.email_text_layout);
-        passError = (TextInputLayout) findViewById(R.id.user_text_layout);
-        confirmError = (TextInputLayout) findViewById(R.id.password_register_text_layout);
+        name = findViewById(R.id.name_edit_text);
+        email = findViewById(R.id.email_edit_text);
+        password = findViewById(R.id.password_edit_text);
+        confirm = findViewById(R.id.confirm_edit_text);
+        nameError = findViewById(R.id.name_text_layout);
+        emailError = findViewById(R.id.email_text_layout);
+        passError = findViewById(R.id.user_text_layout);
+        confirmError = findViewById(R.id.password_register_text_layout);
         mAuth = FirebaseAuth.getInstance();
         register_btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -125,18 +126,35 @@ public class RegisterActivity extends AppCompatActivity {
                                 FirebaseUser user = mAuth.getCurrentUser();
                                 DocumentReference docRef = FirebaseFirestore.getInstance().collection("Users").document(details.getEmail());
                                 Map<String, Object> map = new HashMap<>();
+                                Map<String, List<Integer>> times = new HashMap<>();
+                                times.put("Before Breakfast", new ArrayList<>());
+                                times.put("After Breakfast", new ArrayList<>());
+                                times.put("Before Lunch", new ArrayList<>());
+                                times.put("After Lunch", new ArrayList<>());
+                                times.put("Before Dinner", new ArrayList<>());
+                                times.put("After Dinner", new ArrayList<>());
+                                times.get("Before Breakfast").add(9);
+                                times.get("Before Breakfast").add(0);
+                                times.get("After Breakfast").add(11);
+                                times.get("After Breakfast").add(0);
+                                times.get("Before Lunch").add(13);
+                                times.get("Before Lunch").add(0);
+                                times.get("After Lunch").add(15);
+                                times.get("After Lunch").add(0);
+                                times.get("Before Dinner").add(20);
+                                times.get("Before Dinner").add(0);
+                                times.get("After Dinner").add(22);
+                                times.get("After Dinner").add(0);
+                                map.put("Times",times);
                                 map.put("Name", details.getName());
                                 map.put("Email", details.getEmail());
                                 Map<String, Object> medicinesName = new HashMap<String, Object>();
                                 medicinesName.put("Medicines", new ArrayList<String>());
                                 map.put("MedicineNames", medicinesName);
-                                docRef.set(map).addOnSuccessListener(new OnSuccessListener<Void>() {
-                                    @Override
-                                    public void onSuccess(Void unused) {
-                                        Toast.makeText(RegisterActivity.this, "Registered Successfully", Toast.LENGTH_SHORT).show();
-                                        Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
-                                        startActivity(intent);
-                                    }
+                                docRef.set(map).addOnSuccessListener(unused -> {
+                                    Toast.makeText(RegisterActivity.this, "Registered Successfully", Toast.LENGTH_SHORT).show();
+                                    Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+                                    startActivity(intent);
                                 });
                             } else {
                                 Toast.makeText(RegisterActivity.this, "Authentication failed.",

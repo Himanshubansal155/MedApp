@@ -1,9 +1,13 @@
 package com.example.medapp.ui.notifications;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.Switch;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -17,19 +21,53 @@ import com.example.medapp.R;
 public class NotificationsFragment extends Fragment {
 
     private NotificationsViewModel notificationsViewModel;
+    String url;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         notificationsViewModel =
                 new ViewModelProvider(this).get(NotificationsViewModel.class);
         View root = inflater.inflate(R.layout.fragment_notifications, container, false);
-        final TextView textView = root.findViewById(R.id.text_notifications);
-        notificationsViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
-            @Override
-            public void onChanged(@Nullable String s) {
-                textView.setText(s);
-            }
-        });
+        Button nedmeds = root.findViewById(R.id.netmeds);
+        Button mg = root.findViewById(R.id.mg);
+        Button mchemist = root.findViewById(R.id.mchemist);
+        Button pharmeasy = root.findViewById(R.id.pharmeasy);
+        Button gogomeds = root.findViewById(R.id.gogomeds);
+        Button medibuddy = root.findViewById(R.id.medibuddy);
+        nedmeds.setOnClickListener(this::onClickIntent);
+        mg.setOnClickListener(this::onClickIntent);
+        mchemist.setOnClickListener(this::onClickIntent);
+        medibuddy.setOnClickListener(this::onClickIntent);
+        gogomeds.setOnClickListener(this::onClickIntent);
+        pharmeasy.setOnClickListener(this::onClickIntent);
         return root;
+    }
+
+    public void onClickIntent(View v){
+        switch(v.getId()){
+            case R.id.netmeds:
+                url = "https://www.netmeds.com/";
+                break;
+            case R.id.mg:
+                url = "https://www.1mg.com/";
+                break;
+            case R.id.pharmeasy:
+                url = "https://www.pharmeasy.com/";
+                break;
+            case R.id.mchemist:
+                url = "https://www.mchemist.com/";
+                break;
+            case R.id.medibuddy:
+                url = "https://www.medibuddy.in/";
+                break;
+            case R.id.gogomeds:
+                url = "https://www.gogomeds.com/";
+                break;
+
+        }
+        Intent i = new Intent(Intent.ACTION_VIEW);
+        i.setData(Uri.parse(url));
+        startActivity(i);
+
     }
 }

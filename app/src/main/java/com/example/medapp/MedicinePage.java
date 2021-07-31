@@ -1,6 +1,5 @@
 package com.example.medapp;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -8,29 +7,18 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.RadioButton;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.Timestamp;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.FirebaseFirestore;
-
-import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class MedicinePage extends AppCompatActivity {
     Button button;
@@ -48,7 +36,7 @@ public class MedicinePage extends AppCompatActivity {
         getWindow().setStatusBarColor(Color.TRANSPARENT);
         android.graphics.drawable.Drawable background = MedicinePage.this.getResources().getDrawable(R.drawable.color);
         getWindow().setBackgroundDrawable(background);
-        button = findViewById(R.id.Editreminder);
+        button = findViewById(R.id.medibuddy);
         name = findViewById(R.id.Name);
         dataMap = new HashMap<>();
         Button afterDinnerButton = findViewById(R.id.afterDinnerButton);
@@ -82,39 +70,6 @@ public class MedicinePage extends AppCompatActivity {
         timimgSchedule = (List<String>) hashMap.get("TimingSchedule");
         Integer icon = Integer.valueOf(hashMap.get("Icon").toString());
         imgv.setImageResource(icon);
-//        switch (icon) {
-//            case R.drawable.pill1:
-//                Toast.makeText(this, "pill1 selected", Toast.LENGTH_SHORT).show();
-//                genderRadioButton = findViewById(R.id.pill1);
-//                genderRadioButton.setChecked(true);
-//                onClickMethod(genderRadioButton);
-//                break;
-//            case R.drawable.pill2:
-//                Toast.makeText(this, "pill2 selected", Toast.LENGTH_SHORT).show();
-//                genderRadioButton = findViewById(R.id.pill2);
-//                genderRadioButton.setChecked(true);
-//                onClickMethod(genderRadioButton);
-//                break;
-//            case R.drawable.pill3:
-//                genderRadioButton = findViewById(R.id.pill3);
-//                genderRadioButton.setChecked(true);
-//                onClickMethod(genderRadioButton);
-//                break;
-//            case R.drawable.pill4:
-//                Toast.makeText(this, "pill4 selected", Toast.LENGTH_SHORT).show();
-//                genderRadioButton = findViewById(R.id.pill4);
-//                genderRadioButton.setChecked(true);
-//                onClickMethod(genderRadioButton);
-//                break;
-//            case R.drawable.pill5:
-//                Toast.makeText(this, "pill5 selected", Toast.LENGTH_SHORT).show();
-//                genderRadioButton = (RadioButton) findViewById(R.id.pill5);
-//                genderRadioButton.setChecked(true);
-//                onClickMethod(genderRadioButton);
-//                break;
-//            default:
-//                break;
-//        }
         assert timeDays != null;
         for (String timeDay : timeDays) {
             switch (timeDay) {

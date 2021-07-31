@@ -26,7 +26,7 @@
         app:titleTextColor="#F3ECEC" />
 
     <Button
-        android:id="@+id/text_notifications"
+        android:id="@+id/mg"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="50dp"
@@ -39,7 +39,7 @@
         app:backgroundTint="#4286f4" />
 
     <Button
-        android:id="@+id/button65"
+        android:id="@+id/netmeds"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="50dp"
@@ -52,7 +52,7 @@
         app:backgroundTint="#ee9ca7" />
 
     <Button
-        android:id="@+id/button7"
+        android:id="@+id/gogomeds"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="50dp"
@@ -65,7 +65,7 @@
         app:backgroundTint="#4286f4" />
 
     <Button
-        android:id="@+id/Editreminder"
+        android:id="@+id/medibuddy"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="50dp"
@@ -78,7 +78,7 @@
         app:backgroundTint="#ee9ca7" />
 
     <Button
-        android:id="@+id/button9"
+        android:id="@+id/mchemist"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="50dp"
@@ -91,7 +91,7 @@
         app:backgroundTint="#4286f4" />
 
     <Button
-        android:id="@+id/button8"
+        android:id="@+id/pharmeasy"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="50dp"
@@ -102,20 +102,6 @@
         android:background="@drawable/btn_1_gradiant"
         android:text="@string/www_pharmeasy_in"
         app:backgroundTint="#ee9ca7" />
-
-    <!-- <TextView-->
-
-
-    <!-- android:layout_width="match_parent"-->
-
-
-    <!-- android:layout_height="wrap_content"-->
-
-
-    <!-- android:id="@+id/text_notifications"-->
-
-
-    <!-- />-->
 
 
 </LinearLayout>

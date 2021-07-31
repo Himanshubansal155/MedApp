@@ -41,6 +41,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class LoginActivity extends AppCompatActivity {
@@ -116,6 +117,26 @@ public class LoginActivity extends AppCompatActivity {
                                         Map<String, Object> map = new HashMap<>();
                                         map.put("Name", user.getDisplayName());
                                         map.put("Email", user.getEmail());
+                                        Map<String, List<Integer>> times = new HashMap<>();
+                                        times.put("Before Breakfast", new ArrayList<>());
+                                        times.put("After Breakfast", new ArrayList<>());
+                                        times.put("Before Lunch", new ArrayList<>());
+                                        times.put("After Lunch", new ArrayList<>());
+                                        times.put("Before Dinner", new ArrayList<>());
+                                        times.put("After Dinner", new ArrayList<>());
+                                        times.get("Before Breakfast").add(9);
+                                        times.get("Before Breakfast").add(0);
+                                        times.get("After Breakfast").add(11);
+                                        times.get("After Breakfast").add(0);
+                                        times.get("Before Lunch").add(13);
+                                        times.get("Before Lunch").add(0);
+                                        times.get("After Lunch").add(15);
+                                        times.get("After Lunch").add(0);
+                                        times.get("Before Dinner").add(20);
+                                        times.get("Before Dinner").add(0);
+                                        times.get("After Dinner").add(22);
+                                        times.get("After Dinner").add(0);
+                                        map.put("Times",times);
                                         Map<String, Object> medicinesName = new HashMap<>();
                                         medicinesName.put("Medicines", new ArrayList<String>());
                                         map.put("MedicineNames", medicinesName);
@@ -126,7 +147,6 @@ public class LoginActivity extends AppCompatActivity {
                                         });
                                     }
                                 } else{
-
                                 }
                             }
                         });

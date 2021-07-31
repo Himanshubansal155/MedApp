@@ -275,73 +275,127 @@ public class EditReminder extends AppCompatActivity {
                 }
                 docRef.update("MedicineNames." + finalHashMap.get("Name").toString(), FieldValue.delete()).addOnCompleteListener(task -> {
                     String value = finalHashMap.get("Name").toString();
-                    docRef.update("MedicineNames.Medicines", FieldValue.arrayRemove(value)).addOnCompleteListener(task1 -> Toast.makeText(EditReminder.this, "Deleted", Toast.LENGTH_SHORT).show());
+                    docRef.update("MedicineNames.Medicines", FieldValue.arrayRemove(value)).addOnCompleteListener(task1 -> {
+                        String s = mname.getText().toString();
+                        Integer s1 = 0;
+                        switch (genderRadioButton.getId()) {
+                            case R.id.pill1:
+                                s1 = R.drawable.pill1;
+                                break;
+                            case R.id.pill2:
+                                s1 = R.drawable.pill2;
+                                break;
+                            case R.id.pill3:
+                                s1 = R.drawable.pill3;
+                                break;
+                            case R.id.pill4:
+                                s1 = R.drawable.pill4;
+                                break;
+                            case R.id.pill5:
+                                s1 = R.drawable.pill5;
+                                break;
+                        }
+                        if (s.isEmpty() || s1 == 0 || ll.isEmpty()) {
+                            Toast.makeText(EditReminder.this, s + s1 + ll, Toast.LENGTH_SHORT).show();
+                            Toast.makeText(EditReminder.this, "Plz Fill all fields ", Toast.LENGTH_SHORT).show();
+                        } else {
+                            List<String> medicines = new ArrayList<>();
+                            Map<String, Object> mp = new HashMap<>();
+                            Map<String, Object> mp1 = new HashMap<>();
+                            Map<String, Object> map = new HashMap<>();
+                            map.put("Icon", s1);
+                            map.put("Completed", false);
+                            map.put("Time", daysSelect);
+                            map.put("Name", s);
+                            map.put("TimingSchedule", ll);
+                            map.put("StartDate", date1);
+                            map.put("EndDate", date2);
+                            mp1.put(s, map);
+                            mp.put("MedicineNames", mp1);
+                            docRef.update("MedicineNames.Medicines", FieldValue.arrayUnion(s)).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                @Override
+                                public void onComplete(@NonNull @NotNull Task<Void> task) {
+                                    docRef.set(mp, SetOptions.merge()).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                        @Override
+                                        public void onComplete(@NonNull @NotNull Task<Void> task) {
+                                            Toast.makeText(EditReminder.this, "Updated", Toast.LENGTH_SHORT).show();
+                                            genderRadioButton.setChecked(false);
+                                            onClickMethod(genderRadioButton);
+                                            Intent intent = new Intent(EditReminder.this, MainActivity.class);
+                                            startActivity(intent);
+                                        }
+                                    });
+                                }
+                            });
+                        }
+                    });
                 });
-            }
-            String s = mname.getText().toString();
-            Integer s1 = 0;
-            switch (genderRadioButton.getId()) {
-                case R.id.pill1:
-                    s1 = R.drawable.pill1;
-                    break;
-                case R.id.pill2:
-                    s1 = R.drawable.pill2;
-                    break;
-                case R.id.pill3:
-                    s1 = R.drawable.pill3;
-                    break;
-                case R.id.pill4:
-                    s1 = R.drawable.pill4;
-                    break;
-                case R.id.pill5:
-                    s1 = R.drawable.pill5;
-                    break;
-            }
-            if (s.isEmpty() || s1 == 0 || ll.isEmpty() || date1 == null || date2 == null || date2.getTime() - date1.getTime() < 0) {
-                Toast.makeText(EditReminder.this, s + s1 + ll + date1 + date2, Toast.LENGTH_SHORT).show();
-                Toast.makeText(EditReminder.this, "Plz Fill all fields ", Toast.LENGTH_SHORT).show();
             } else {
-                List<String> medicines = new ArrayList<>();
-                Map<String, Object> mp = new HashMap<>();
-                Map<String, Object> mp1 = new HashMap<>();
-                Map<String, Object> map = new HashMap<>();
-                map.put("Icon", s1);
-                map.put("Completed", false);
-                map.put("Time", daysSelect);
-                map.put("Name", s);
-                map.put("TimingSchedule", ll);
-                map.put("StartDate", date1);
-                map.put("EndDate", date2);
-                mp1.put(s, map);
-                mp.put("MedicineNames", mp1);
-                docRef.update("MedicineNames.Medicines", FieldValue.arrayUnion(s)).addOnCompleteListener(new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull @NotNull Task<Void> task) {
-                        docRef.set(mp, SetOptions.merge()).addOnCompleteListener(new OnCompleteListener<Void>() {
-                            @Override
-                            public void onComplete(@NonNull @NotNull Task<Void> task) {
-                                Toast.makeText(EditReminder.this, "Updated", Toast.LENGTH_SHORT).show();
-                                genderRadioButton.setChecked(false);
-                                onClickMethod(genderRadioButton);
-                                Intent intent = new Intent(EditReminder.this, DashboardFragment.class);
-                                startActivity(intent);
-                            }
-                        });
-                    }
-                });
-            }
-        });
+                String s = mname.getText().toString();
+                Integer s1 = 0;
+                switch (genderRadioButton.getId()) {
+                    case R.id.pill1:
+                        s1 = R.drawable.pill1;
+                        break;
+                    case R.id.pill2:
+                        s1 = R.drawable.pill2;
+                        break;
+                    case R.id.pill3:
+                        s1 = R.drawable.pill3;
+                        break;
+                    case R.id.pill4:
+                        s1 = R.drawable.pill4;
+                        break;
+                    case R.id.pill5:
+                        s1 = R.drawable.pill5;
+                        break;
+                }
+                if (s.isEmpty() || s1 == 0 || ll.isEmpty() || date1 == null || date2 == null || date2.getTime() - date1.getTime() < 0) {
+                    Toast.makeText(EditReminder.this, s + s1 + ll + date1 + date2, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(EditReminder.this, "Plz Fill all fields ", Toast.LENGTH_SHORT).show();
+                } else {
+                    List<String> medicines = new ArrayList<>();
+                    Map<String, Object> mp = new HashMap<>();
+                    Map<String, Object> mp1 = new HashMap<>();
+                    Map<String, Object> map = new HashMap<>();
+                    map.put("Icon", s1);
+                    map.put("Completed", false);
+                    map.put("Time", daysSelect);
+                    map.put("Name", s);
+                    map.put("TimingSchedule", ll);
+                    map.put("StartDate", date1);
+                    map.put("EndDate", date2);
+                    mp1.put(s, map);
+                    mp.put("MedicineNames", mp1);
+                    docRef.update("MedicineNames.Medicines", FieldValue.arrayUnion(s)).addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull @NotNull Task<Void> task) {
+                            docRef.set(mp, SetOptions.merge()).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                @Override
+                                public void onComplete(@NonNull @NotNull Task<Void> task) {
+                                    Toast.makeText(EditReminder.this, "Updated", Toast.LENGTH_SHORT).show();
+                                    genderRadioButton.setChecked(false);
+                                    onClickMethod(genderRadioButton);
+                                    Intent intent = new Intent(EditReminder.this, DashboardFragment.class);
+                                    startActivity(intent);
+                                }
+                            });
+                        }
+                    });
+                }
+
+            }});
     }
 
     @SuppressLint("ResourceAsColor")
-    public boolean afterClickChange(Button button, boolean afterClick, Stack<String> ll) {
+    public boolean afterClickChange(Button button, boolean afterClick, Stack<String> list) {
         afterClick = !afterClick;
         if (afterClick == true) {
             button.getBackground().setAlpha(100);
-            ll.add(button.getText().toString());
+            list.add(button.getText().toString());
         } else {
             button.getBackground().setAlpha(255);
-            ll.pop();
+            list.pop();
         }
         return afterClick;
     }

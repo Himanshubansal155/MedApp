@@ -400,7 +400,7 @@
                 tools:srcCompat="@tools:sample/avatars" />
 
             <Button
-                android:id="@+id/Editreminder"
+                android:id="@+id/medibuddy"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
