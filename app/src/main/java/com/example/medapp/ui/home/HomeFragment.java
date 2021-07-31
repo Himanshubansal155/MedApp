@@ -188,8 +188,13 @@ public class HomeFragment extends Fragment {
                                         List<String> timeStamp;
                                         timeStamp = (List<String>) medicineName.get("TimingSchedule");
                                         assert timeStamp != null;
-                                        button1TitleList.add(timeStamp.get(0));
-                                        button2TitleList.add(timeStamp.get(1));
+                                        if(timeStamp.size() == 1){
+                                            button1TitleList.add(timeStamp.get(0));
+                                            button2TitleList.add("");
+                                        } else{
+                                            button1TitleList.add(timeStamp.get(0));
+                                            button2TitleList.add(timeStamp.get(1));
+                                        }
                                         imgIdList.add(icon);
                                     }
                                 }
@@ -241,8 +246,13 @@ public class HomeFragment extends Fragment {
                                                 List<String> timeStamp;
                                                 timeStamp = (List<String>) medicineName.get("TimingSchedule");
                                                 assert timeStamp != null;
-                                                button1TitleList.add(timeStamp.get(0));
-                                                button2TitleList.add(timeStamp.get(1));
+                                                if(timeStamp.size() == 1){
+                                                    button1TitleList.add(timeStamp.get(0));
+                                                    button2TitleList.add("");
+                                                } else{
+                                                    button1TitleList.add(timeStamp.get(0));
+                                                    button2TitleList.add(timeStamp.get(1));
+                                                }
                                                 imgIdList.add(icon);
                                                 break loop;
                                             }
@@ -264,8 +274,13 @@ public class HomeFragment extends Fragment {
                                                     List<String> timeStamp;
                                                     timeStamp = (List<String>) medicineName.get("TimingSchedule");
                                                     assert timeStamp != null;
-                                                    button1TitleList.add(timeStamp.get(0));
-                                                    button2TitleList.add(timeStamp.get(1));
+                                                    if(timeStamp.size() == 1){
+                                                        button1TitleList.add(timeStamp.get(0));
+                                                        button2TitleList.add("");
+                                                    } else{
+                                                        button1TitleList.add(timeStamp.get(0));
+                                                        button2TitleList.add(timeStamp.get(1));
+                                                    }
                                                     imgIdList.add(icon);
                                                     break loop;
                                                 }
@@ -322,8 +337,13 @@ public class HomeFragment extends Fragment {
                                                 List<String> timeStamp;
                                                 timeStamp = (List<String>) medicineName.get("TimingSchedule");
                                                 assert timeStamp != null;
-                                                button1TitleList.add(timeStamp.get(0));
-                                                button2TitleList.add(timeStamp.get(1));
+                                                if(timeStamp.size() == 1){
+                                                    button1TitleList.add(timeStamp.get(0));
+                                                    button2TitleList.add("");
+                                                } else{
+                                                    button1TitleList.add(timeStamp.get(0));
+                                                    button2TitleList.add(timeStamp.get(1));
+                                                }
                                                 imgIdList.add(icon);
                                                 break loop;
                                             }
@@ -345,8 +365,13 @@ public class HomeFragment extends Fragment {
                                                     List<String> timeStamp;
                                                     timeStamp = (List<String>) medicineName.get("TimingSchedule");
                                                     assert timeStamp != null;
-                                                    button1TitleList.add(timeStamp.get(0));
-                                                    button2TitleList.add(timeStamp.get(1));
+                                                    if(timeStamp.size() == 1){
+                                                        button1TitleList.add(timeStamp.get(0));
+                                                        button2TitleList.add("");
+                                                    } else{
+                                                        button1TitleList.add(timeStamp.get(0));
+                                                        button2TitleList.add(timeStamp.get(1));
+                                                    }
                                                     imgIdList.add(icon);
                                                     break loop;
                                                 }

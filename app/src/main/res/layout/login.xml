@@ -63,7 +63,7 @@
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/user_id_edit_text"
             android:layout_width="match_parent"
-            android:layout_height="48dp"
+            android:layout_height="50dp"
             android:inputType="textEmailAddress"
             android:maxLines="1" />
 
@@ -89,7 +89,7 @@
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/user_id_password_text"
             android:layout_width="match_parent"
-            android:layout_height="48dp"
+            android:layout_height="50dp"
             android:inputType="textPassword"
             android:maxLines="1" />
 

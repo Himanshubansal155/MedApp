@@ -373,10 +373,10 @@ public class EditReminder extends AppCompatActivity {
                             docRef.set(mp, SetOptions.merge()).addOnCompleteListener(new OnCompleteListener<Void>() {
                                 @Override
                                 public void onComplete(@NonNull @NotNull Task<Void> task) {
-                                    Toast.makeText(EditReminder.this, "Updated", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(EditReminder.this, "Go To Settings Page to set Alarm", Toast.LENGTH_SHORT).show();
                                     genderRadioButton.setChecked(false);
                                     onClickMethod(genderRadioButton);
-                                    Intent intent = new Intent(EditReminder.this, DashboardFragment.class);
+                                    Intent intent = new Intent(EditReminder.this, MainActivity.class);
                                     startActivity(intent);
                                 }
                             });

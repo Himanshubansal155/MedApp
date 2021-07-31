@@ -11,6 +11,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.medapp.EditReminder;
+import com.example.medapp.MainActivity;
 import com.example.medapp.R;
 import com.example.medapp.ui.dashboard.DashboardFragment;
 import com.google.firebase.auth.FirebaseAuth;
@@ -60,17 +61,22 @@ public class MyListAdapter extends ArrayAdapter<String> {
         titleText.setText(mainTitle[position]);
         imageView.setImageResource(imgId[position]);
         button1Text.setText(button1Title[position]);
-        button2Text.setText(button2Title[position]);
+        if(button2Title[position].equals("")){
+            button2Text.setVisibility(View.INVISIBLE);
+        } else{
+            button2Text.setVisibility(View.VISIBLE);
+            button2Text.setText(button2Title[position]);
+        }
 
         imageView1.setOnClickListener(v -> {
             String email = FirebaseAuth.getInstance().getCurrentUser().getEmail();
             DocumentReference docRef = FirebaseFirestore.getInstance().collection("Users").document(email);
             HashMap<String, Object> map = hashMap.get(group.get(position));
-            Toast.makeText(context, map.toString(), Toast.LENGTH_SHORT).show();
             docRef.update("MedicineNames." + map.get("Name").toString(), FieldValue.delete()).addOnCompleteListener(task -> {
                 String value = map.get("Name").toString();
                 docRef.update("MedicineNames.Medicines", FieldValue.arrayRemove(value)).addOnCompleteListener(task1 -> {
                     Toast.makeText(getContext(), "Deleted", Toast.LENGTH_SHORT).show();
+                    getContext().startActivity(new Intent(getContext(), MainActivity.class));
                 });
             });
         });
