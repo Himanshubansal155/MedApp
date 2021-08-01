@@ -299,12 +299,17 @@ public class EditReminder extends AppCompatActivity {
                             Toast.makeText(EditReminder.this, s + s1 + ll, Toast.LENGTH_SHORT).show();
                             Toast.makeText(EditReminder.this, "Plz Fill all fields ", Toast.LENGTH_SHORT).show();
                         } else {
-                            List<String> medicines = new ArrayList<>();
                             Map<String, Object> mp = new HashMap<>();
                             Map<String, Object> mp1 = new HashMap<>();
                             Map<String, Object> map = new HashMap<>();
                             map.put("Icon", s1);
-                            map.put("Completed", false);
+                            Calendar calendar1 = Calendar.getInstance();
+                            calendar1.set(Calendar.DAY_OF_MONTH, calendar1.get(Calendar.DAY_OF_MONTH) - 1);
+                            calendar1.set(Calendar.HOUR_OF_DAY, 0);
+                            calendar1.set(Calendar.MINUTE, 0);
+                            calendar1.set(Calendar.SECOND, 0);
+                            calendar1.set(Calendar.MILLISECOND, 0);
+                            map.put("Completed", calendar1.getTime());
                             map.put("Time", daysSelect);
                             map.put("Name", s);
                             map.put("TimingSchedule", ll);
@@ -359,7 +364,13 @@ public class EditReminder extends AppCompatActivity {
                     Map<String, Object> mp1 = new HashMap<>();
                     Map<String, Object> map = new HashMap<>();
                     map.put("Icon", s1);
-                    map.put("Completed", false);
+                    Calendar calendar1 = Calendar.getInstance();
+                    calendar1.set(Calendar.DAY_OF_MONTH, calendar1.get(Calendar.DAY_OF_MONTH) - 1);
+                    calendar1.set(Calendar.HOUR_OF_DAY, 0);
+                    calendar1.set(Calendar.MINUTE, 0);
+                    calendar1.set(Calendar.SECOND, 0);
+                    calendar1.set(Calendar.MILLISECOND, 0);
+                    map.put("Completed", calendar1.getTime());
                     map.put("Time", daysSelect);
                     map.put("Name", s);
                     map.put("TimingSchedule", ll);

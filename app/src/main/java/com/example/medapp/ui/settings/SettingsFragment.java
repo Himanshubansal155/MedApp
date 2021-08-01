@@ -57,7 +57,6 @@ public class SettingsFragment extends Fragment {
     Button changeButton;
 
     String[] weekDays = {"", "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"};
-    Map<String, List<Integer>> times;
     private SettingsViewModel settingsViewModel;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -82,6 +81,24 @@ public class SettingsFragment extends Fragment {
                     DocumentSnapshot snap = task.getResult();
                     String name = (String) snap.getData().get("Name");
                     userName.setText(name);
+                    Map<String, HashMap<String, Object>> medicineStore;
+                    medicineStore = (Map<String, HashMap<String, Object>>) snap.getData().get("MedicineNames");
+                    List<String> group = (List<String>) medicineStore.get("Medicines");
+                    assert group != null;
+                    for (String MedicineName : group) {
+                        Map<String, Object> medicineName;
+                        medicineName = medicineStore.get(MedicineName);
+                        assert medicineName != null;
+                        Calendar today = Calendar.getInstance();
+                        today.set(Calendar.HOUR_OF_DAY, 0);
+                        today.set(Calendar.MINUTE, 0);
+                        today.set(Calendar.SECOND, 0);
+                        today.set(Calendar.MILLISECOND, 0);
+                        Date completedDate = ((Timestamp) medicineName.get("Completed")).toDate();
+                        if(completedDate.compareTo(today.getTime()) == 0){
+                            alarmState.setChecked(true);
+                        }
+                    }
                 }
             });
             emailChange.setText(currentUser.getEmail());
@@ -203,7 +220,6 @@ public class SettingsFragment extends Fragment {
                                     assert dataMap != null;
                                     Map<String, HashMap<String, Object>> medicineStore;
                                     medicineStore = (Map<String, HashMap<String, Object>>) dataMap.get("MedicineNames");
-                                    Map<String, List<Integer>> times = (Map<String, List<Integer>>) dataMap.get("Times");
                                     List<String> group = (List<String>) medicineStore.get("Medicines");
                                     assert group != null;
                                     for (String MedicineName : group) {
@@ -211,6 +227,7 @@ public class SettingsFragment extends Fragment {
                                         medicineName = medicineStore.get(MedicineName);
                                         assert medicineName != null;
                                         List<String> days = (List<String>) medicineName.get("Time");
+                                        Date completedDate = ((Timestamp) medicineName.get("Completed")).toDate();
                                         Date endDate = ((Timestamp) medicineName.get("EndDate")).toDate();
                                         Date startDate = ((Timestamp) medicineName.get("StartDate")).toDate();
                                         List<String> timeStamp;
@@ -225,20 +242,33 @@ public class SettingsFragment extends Fragment {
                                             assert days != null;
                                             for (String day : days) {
                                                 if (weekDays[today.get(Calendar.DAY_OF_WEEK)].equals(day)) {
-                                                    for (String s : timeStamp) {
-                                                        assert times != null;
-                                                        List<Integer> time = times.get(s);
-                                                        Toast.makeText(getContext(), time.toString(), Toast.LENGTH_SHORT).show();
-                                                        Intent intent = new Intent(AlarmClock.ACTION_SET_ALARM);
-                                                        intent.putExtra(AlarmClock.EXTRA_HOUR, time.get(0));
-                                                        intent.putExtra(AlarmClock.EXTRA_MINUTES, time.get(1));
-                                                        intent.putExtra(AlarmClock.EXTRA_MESSAGE, "Take your medicine " + MedicineName);
-                                                        startActivity(intent);
-
+                                                    assert completedDate != null;
+                                                    if(completedDate.compareTo(today.getTime()) == 0){
+                                                        Toast.makeText(getContext(), "Completed", Toast.LENGTH_SHORT).show();
+                                                        alarmState.setChecked(true);
+                                                    } else {
+                                                        today = Calendar.getInstance();
+                                                        for (String s : timeStamp) {
+                                                            Intent intent = new Intent(AlarmClock.ACTION_SET_ALARM);
+                                                            intent.putExtra(AlarmClock.EXTRA_HOUR, today.get(Calendar.HOUR));
+                                                            intent.putExtra(AlarmClock.EXTRA_MINUTES, today.get((Calendar.MINUTE)));
+                                                            intent.putExtra(AlarmClock.EXTRA_MESSAGE, "Please Take " + s + " medicine " + MedicineName);
+                                                            startActivity(intent);
+                                                        }
+                                                        today.set(Calendar.HOUR_OF_DAY, 0);
+                                                        today.set(Calendar.MINUTE, 0);
+                                                        today.set(Calendar.SECOND, 0);
+                                                        today.set(Calendar.MILLISECOND, 0);
+                                                        completedDate = today.getTime();
+                                                        docRef.update("MedicineNames." + MedicineName + ".Completed", completedDate).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                            @Override
+                                                            public void onComplete(@NonNull @NotNull Task<Void> task) {
+                                                                Toast.makeText(getContext(), "Updated", Toast.LENGTH_SHORT).show();
+                                                            }
+                                                        });
                                                     }
                                                 }
                                             }
-
                                         }
                                     }
                                 }
