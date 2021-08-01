@@ -97,6 +97,8 @@ public class SettingsFragment extends Fragment {
                         Date completedDate = ((Timestamp) medicineName.get("Completed")).toDate();
                         if(completedDate.compareTo(today.getTime()) == 0){
                             alarmState.setChecked(true);
+                        } else{
+                            alarmState.setChecked(false);
                         }
                     }
                 }
